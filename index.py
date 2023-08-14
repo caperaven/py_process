@@ -1,6 +1,7 @@
 from dynamic_import import dynamic_import
 from utils.set_value import set_value
 
+
 class ProcessRunner:
     modules = {}
 
@@ -12,7 +13,7 @@ class ProcessRunner:
                 self.modules[module] = imported_module
                 pass
 
-    def run(self, step, context = None, process = None, item = None):
+    def run(self, step, context=None, process=None, item=None):
         system_type = step.get('type')
         action = step.get('action')
         args = step.get('args')
@@ -32,4 +33,4 @@ class ProcessRunner:
 
 
 runner = ProcessRunner(["console"])
-runner.run({ "type": "console", "action": "print", "args": { "message": "Hello World" }})
+runner.run({"type": "console", "action": "print", "args": {"message": "Hello World"}})
