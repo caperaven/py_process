@@ -1,15 +1,22 @@
+import os
+
 from dynamic_import import dynamic_import
-from utils.set_value import set_value
+from src.utils.set_value import set_value
 
 
 class ProcessRunner:
     modules = {}
 
     def __init__(self, modules):
+        current_script_path = os.path.abspath(__file__)
+        current_directory = os.path.dirname(current_script_path)
+
         if modules is not None:
             for module in modules:
-                path = f"./action_systems/{module}_actions.py"
-                imported_module = dynamic_import(path).Default
+                relative_path  = f"action_systems/{module}_actions.py"
+                target_module_path = os.path.join(current_directory, relative_path)
+
+                imported_module = dynamic_import(target_module_path).Default
                 self.modules[module] = imported_module
                 pass
 

@@ -1,4 +1,4 @@
-from action_systems.console_actions import Default as ConsoleActions
+from src.action_systems.console_actions import Default as ConsoleActions
 
 
 def test_console_print(monkeypatch):
