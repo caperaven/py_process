@@ -9,5 +9,5 @@ def test_process_call(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    process.call({"type": "console", "action": "print", "args": {"message": "Hello World"}})
+    process.call("console", "print", {"message": "Hello World"})
     assert printed_message == "Hello World"

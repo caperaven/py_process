@@ -10,8 +10,15 @@ class Process:
         self.process_runner = ProcessRunner(["console"])
 
     # This method is used to call a process step.
-    def call(self, step, context=None, process=None, item=None):
+    def call(self, step_type, step_action, step_args, context=None, process=None, item=None):
+        step = {
+            "type": step_type,
+            "action": step_action,
+            "args": step_args
+        }
+
         return self.process_runner.run_step(step, context, process, item)
 
 
 process = Process()
+call = process.call
