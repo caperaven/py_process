@@ -1,4 +1,4 @@
-from src.index import ProcessRunner
+from src.process_runner import ProcessRunner
 
 
 def test_process_runner(monkeypatch):
