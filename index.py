@@ -8,12 +8,12 @@ class ProcessRunner:
     def __init__(self, modules):
         if modules is not None:
             for module in modules:
-                path = f"./action_systems/{module}-actions.py"
+                path = f"./action_systems/{module}_actions.py"
                 imported_module = dynamic_import(path).Default
                 self.modules[module] = imported_module
                 pass
 
-    def run(self, step, context=None, process=None, item=None):
+    def run_step(self, step, context=None, process=None, item=None):
         system_type = step.get('type')
         action = step.get('action')
         args = step.get('args')
@@ -30,7 +30,3 @@ class ProcessRunner:
             return result
         else:
             print(f"{action} not found in the imported module.")
-
-
-runner = ProcessRunner(["console"])
-runner.run({"type": "console", "action": "print", "args": {"message": "Hello World"}})
