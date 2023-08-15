@@ -6,8 +6,8 @@ from src.process_runner import ProcessRunner
 # Since process steps can be called from anywhere in the code, including other modules,
 # use the process variable to call process steps.
 class Process:
-    def __init__(self):
-        self.process_runner = ProcessRunner(["console"])
+    def __init__(self, modules=None):
+        self.process_runner = ProcessRunner(modules)
 
     # This method is used to call a process step.
     async def call(self, step_type, step_action, step_args, context=None, process=None, item=None):
