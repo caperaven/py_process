@@ -4,7 +4,7 @@ from src.utils.prefixes import CONTEXT_PREFIX, PROCESS_PARAMETERS_PREFIX, PROCES
 # set a value on a path for a given context, process, or item
 # depending on the prefix of the path string (e.g. $c{, $p{, $d{, $i{) the value will be set on the context,
 # process parameters, process data, or item
-def set_value(path, value, context, process, item):
+async def set_value(path, value, context, process, item):
     if path is None:
         return
 

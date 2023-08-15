@@ -1,6 +1,7 @@
 from src.process_api import process
 
-def test_process_call(monkeypatch):
+
+async def test_process_call(monkeypatch):
     printed_message = None
 
     def mock_print(x):
@@ -9,5 +10,5 @@ def test_process_call(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    process.call("console", "print", {"message": "Hello World"})
+    await process.call("console", "print", {"message": "Hello World"})
     assert printed_message == "Hello World"

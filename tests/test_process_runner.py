@@ -1,7 +1,7 @@
 from src.process_runner import ProcessRunner
 
 
-def test_process_runner(monkeypatch):
+async def test_process_runner(monkeypatch):
     printed_message = None
 
     def mock_print(x):
@@ -11,5 +11,5 @@ def test_process_runner(monkeypatch):
     monkeypatch.setattr('builtins.print', mock_print)
 
     runner = ProcessRunner(["console"])
-    runner.run_step({"type": "console", "action": "print", "args": {"message": "Hello World"}})
+    await runner.run_step({"type": "console", "action": "print", "args": {"message": "Hello World"}})
     assert printed_message == "Hello World"
