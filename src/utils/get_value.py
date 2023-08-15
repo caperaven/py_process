@@ -9,10 +9,10 @@ async def get_value(value, context=None, process=None, item=None):
         return context
 
     if value == "$p":
-        return process.parameters
+        return get_property_on_path(process, ["parameters"])
 
     if value == "$d":
-        return process.data
+        return get_property_on_path(process, ["data"])
 
     if value == "$i":
         return item

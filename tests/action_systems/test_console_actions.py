@@ -1,6 +1,8 @@
+import pytest
 from src.action_systems.console_actions import Default as ConsoleActions
 
 
+@pytest.mark.asyncio
 async def test_console_print(monkeypatch):
     printed_message = None
 
@@ -14,6 +16,7 @@ async def test_console_print(monkeypatch):
     assert printed_message == 'Hello World'
 
 
+@pytest.mark.asyncio
 async def test_console_print_context(monkeypatch):
     printed_message = None
 
@@ -23,5 +26,5 @@ async def test_console_print_context(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    ConsoleActions.print({'message': '$c{firstName}'}, {'firstName': 'John'}, None, None)
+    await ConsoleActions.print({'message': '$c{firstName}'}, {'firstName': 'John'}, None, None)
     assert printed_message == 'John'

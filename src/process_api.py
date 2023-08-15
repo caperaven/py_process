@@ -6,6 +6,13 @@ from src.process_runner import ProcessRunner
 # Since process steps can be called from anywhere in the code, including other modules,
 # use the process variable to call process steps.
 class Process:
+
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            print("creating singleton")
+            cls.instance = super(Process, cls).__new__(cls)
+        return cls.instance
+
     def __init__(self, modules=None):
         self.process_runner = ProcessRunner(modules)
 

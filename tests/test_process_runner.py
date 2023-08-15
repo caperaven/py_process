@@ -1,6 +1,8 @@
+import pytest
 from src.process_runner import ProcessRunner
 
 
+@pytest.mark.asyncio
 async def test_process_runner(monkeypatch):
     printed_message = None
 

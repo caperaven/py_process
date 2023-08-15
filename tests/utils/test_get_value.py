@@ -1,15 +1,19 @@
+import pytest
 from src.utils.get_value import get_value
 
 
 # get the value as you passed it in as it does not start with a path prefix
+@pytest.mark.asyncio
 async def test_get_value_standard():
     assert await get_value("1") == "1"
 
 
+@pytest.mark.asyncio
 async def test_get_value_context():
     assert await get_value("$c{firstName}", {"firstName": "John"}) == "John"
 
 
+@pytest.mark.asyncio
 async def test_get_value_process():
     class Process:
         parameters = {"firstName": "John"}
@@ -17,6 +21,7 @@ async def test_get_value_process():
     assert await get_value("$p{firstName}", None, Process()) == "John"
 
 
+@pytest.mark.asyncio
 async def test_get_value_item():
     class Item:
         firstName = "John"
@@ -24,6 +29,7 @@ async def test_get_value_item():
     assert await get_value("$i{firstName}", None, None, Item()) == "John"
 
 
+@pytest.mark.asyncio
 async def test_get_value_complex_path():
     item = {
         "person": {
@@ -34,6 +40,7 @@ async def test_get_value_complex_path():
     assert await get_value("$i{person.firstName}", None, None, item) == "John"
 
 
+@pytest.mark.asyncio
 async def test_get_objects():
     context = {}
     process = {"parameters": {}, "data": {}}
