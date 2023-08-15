@@ -34,6 +34,9 @@ class ProcessRunner:
             self.load_modules([system_type])
             module = self.modules[system_type]
 
+        if action is None:
+            action = "perform"
+
         if hasattr(module, action):
             function = getattr(module, action)
             result = await function(args, context, process, item)

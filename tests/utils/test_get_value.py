@@ -32,3 +32,14 @@ async def test_get_value_complex_path():
     }
 
     assert await get_value("$i{person.firstName}", None, None, item) == "John"
+
+
+async def test_get_objects():
+    context = {}
+    process = {"parameters": {}, "data": {}}
+    item = {}
+
+    assert await get_value("$c", context) == context
+    assert await get_value("$p", None, process) == process["parameters"]
+    assert await get_value("$d", None, process) == process["data"]
+    assert await get_value("$i", None, None, item) == item

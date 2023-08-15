@@ -5,6 +5,18 @@ async def get_value(value, context=None, process=None, item=None):
     if value is None:
         return None
 
+    if value == "$c":
+        return context
+
+    if value == "$p":
+        return process.parameters
+
+    if value == "$d":
+        return process.data
+
+    if value == "$i":
+        return item
+
     # if the value starts with $c{, then it is a context variable
     if value.startswith(CONTEXT_PREFIX) and context is not None:
         return get_property_on_path(context, value[3:-1].split("."))
