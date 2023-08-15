@@ -9,8 +9,8 @@ class Process:
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
-            print("creating singleton")
             cls.instance = super(Process, cls).__new__(cls)
+
         return cls.instance
 
     def __init__(self, modules=None):
@@ -24,6 +24,9 @@ class Process:
             "args": step_args
         }
 
+        return await self.process_runner.run_step(step, context, process, item)
+
+    async def run(self, step, context, process, item):
         return await self.process_runner.run_step(step, context, process, item)
 
 
