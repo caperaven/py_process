@@ -45,10 +45,10 @@ def get_property_on_path(obj, path):
         return None
 
     result = None
+    field_name = path[0]
     if isinstance(obj, dict):
-        result = obj.get(path[0])
-
-    if hasattr(obj, path[0]):
+        result = obj.get(field_name, None)
+    elif hasattr(obj, path[0]):
         result = getattr(obj, path[0])
 
     if len(path) == 1:

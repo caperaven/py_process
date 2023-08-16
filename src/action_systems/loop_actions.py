@@ -5,7 +5,7 @@ from src.process_api import process as api
 class Default:
 
     @staticmethod
-    async def perform(args, context, process, item):
+    async def perform(args, context=None, process=None, item=None):
         collection = await get_value(args.get("source"), context, process, item)
 
         if collection is None:
