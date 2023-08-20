@@ -18,6 +18,13 @@ OPERATORS = {
     "not": " not "
 }
 
+PREFIXES = {
+    "c": "context.",
+    "i": "item.",
+    "d": "process.data.",
+    "p": "process.parameters."
+}
+
 
 class SanitizeTypes(Enum):
     CONDITION = 0
@@ -72,14 +79,9 @@ def tokens_to_condition(tokens):
         # 3. data - $d{...}
         # 4. parameters - $p{...}
         if (prev_token and prev_token[VALUE] == "$") and (next_token and next_token[VALUE] == "{"):
-            if current_token[VALUE] == "c":
-                expr.append("context.")
-            elif current_token[VALUE] == "i":
-                expr.append("item.")
-            elif current_token[VALUE] == "d":
-                expr.append("process.data.")
-            elif current_token[VALUE] == "p":
-                expr.append("process.parameters.")
+            prefix = PREFIXES.get(value, None)
+            if prefix:
+                expr.append(prefix)
 
             continue
 
