@@ -30,7 +30,7 @@ def sanitize(expr, san_type=SanitizeTypes.CONDITION):
     tokens_list = list(tokens)
 
     if san_type == SanitizeTypes.CONDITION:
-        return tokens_to_condition(tokens_list)
+        return f"return {tokens_to_condition(tokens_list)}"
 
     return expr
 
