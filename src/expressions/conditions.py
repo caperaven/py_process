@@ -1,5 +1,4 @@
 from src.expressions.sanitize import sanitize
-from types import FunctionType
 
 
 class Conditions:
