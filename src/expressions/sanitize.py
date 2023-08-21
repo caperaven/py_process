@@ -52,6 +52,17 @@ def tokens_to_condition(tokens):
         # get current token
         current_token = tokens[i]
 
+        value = current_token[VALUE]
+
+        # ignore tokens that are not relevant
+        if value in IGNORED_TOKENS:
+            continue
+
+        # if value is an operator, append the corresponding python operator
+        if value in OPERATORS:
+            expr.append(OPERATORS[value])
+            continue
+
         # get previous token if exists
         if i > 0:
             prev_token = tokens[i - 1]
@@ -59,19 +70,6 @@ def tokens_to_condition(tokens):
         # get next token if exists
         if i < count - 1:
             next_token = tokens[i + 1]
-
-        value = current_token[VALUE]
-
-        # ignore tokens that are not relevant
-        if value in IGNORED_TOKENS:
-            prev_token = current_token
-            continue
-
-        # if value is an operator, append the corresponding python operator
-        if value in OPERATORS:
-            expr.append(OPERATORS[value])
-            prev_token = current_token
-            continue
 
         # the current token presents a prefix for either
         # 1. context - $c{...}
@@ -85,7 +83,6 @@ def tokens_to_condition(tokens):
 
             continue
 
-        prev_token = current_token
         expr.append(value)
 
     return "".join(expr)

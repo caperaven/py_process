@@ -13,3 +13,9 @@ async def test_sanitize_simple_context():
 @pytest.mark.asyncio
 async def test_sanitize_simple_item():
     assert sanitize("$i{firstName} eq 'John'") == "return item.firstName == 'John'"
+
+
+
+
+def unknown(context=None, process=None, item=None):
+    return context.model.firstName == 'John'
