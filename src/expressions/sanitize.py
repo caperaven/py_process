@@ -4,7 +4,7 @@ from enum import Enum
 
 TYPE = 0
 VALUE = 1
-IGNORED_TOKENS = ["}", "{", "$", "utf-8"]
+IGNORED_TOKENS = ["}", "{", "$", "utf-8", "."]
 
 OPERATORS = {
     "eq": " == ",
@@ -19,10 +19,10 @@ OPERATORS = {
 }
 
 PREFIXES = {
-    "c": "context.",
-    "i": "item.",
-    "d": "process.data.",
-    "p": "process.parameters."
+    "c": "context",
+    "i": "item",
+    "d": "process.data",
+    "p": "process.parameters"
 }
 
 
@@ -37,7 +37,7 @@ def sanitize(expr, san_type=SanitizeTypes.CONDITION):
     tokens_list = list(tokens)
 
     if san_type == SanitizeTypes.CONDITION:
-        return f"return {tokens_to_condition(tokens_list)}"
+        return f"{tokens_to_condition(tokens_list)}"
 
     return expr
 
@@ -48,6 +48,8 @@ def tokens_to_condition(tokens):
     next_token = None
 
     count = len(tokens)
+    is_path = False
+
     for i in range(0, count):
         # get current token
         current_token = tokens[i]
@@ -56,6 +58,8 @@ def tokens_to_condition(tokens):
 
         # ignore tokens that are not relevant
         if value in IGNORED_TOKENS:
+            if value == "}":
+                is_path = False
             continue
 
         # if value is an operator, append the corresponding python operator
@@ -81,8 +85,12 @@ def tokens_to_condition(tokens):
             if prefix:
                 expr.append(prefix)
 
+            is_path = True
             continue
 
-        expr.append(value)
+        if is_path:
+            expr.append(f"['{value}']")
+        else:
+            expr.append(value)
 
     return "".join(expr)
