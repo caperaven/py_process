@@ -1,5 +1,5 @@
 from src.expressions.conditions import conditions
-from src.process_api import process as api
+from src.utils.run_step import run_step
 
 
 class Default:
@@ -20,10 +20,4 @@ class Default:
             return await run_step(fail_step, context, process, item)
 
 
-async def run_step(step, context, process, item):
-    step_to_run = step
 
-    if isinstance(step_to_run, str):
-        step_to_run = process["steps"][step_to_run]
-
-    await api.run(step_to_run, context, process, item)
