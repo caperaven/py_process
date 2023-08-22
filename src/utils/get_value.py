@@ -1,7 +1,7 @@
 from src.utils.prefixes import CONTEXT_PREFIX, PROCESS_PARAMETERS_PREFIX, PROCESS_DATA_PREFIX, ITEM_PREFIX
 
 
-async def get_value(value, context=None, process=None, item=None):
+async def get_value(value=None, context=None, process=None, item=None):
     if value is None:
         return None
 

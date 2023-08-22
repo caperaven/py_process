@@ -7,8 +7,10 @@ class Default:
     @staticmethod
     async def perform(step, context=None, process=None, item=None):
         args = step.get("args")
-        cases = step.get("cases")
+        cases = await get_value(args.get('cases'), context, process, item)
         value = await get_value(args.get('check'), context, process, item)
 
         step_to_run = cases.get(value)
-        await run_step(step_to_run, context, process, item)
+
+        if value is not None:
+            await run_step(step_to_run, context, process, item)

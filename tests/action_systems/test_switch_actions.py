@@ -4,20 +4,20 @@ from src.action_systems.switch_actions import Default as SwitchActions
 step = {
     "args": {
         "check": "$c{firstName}",
-    },
-    "cases": {
-        "John": {
-            "type": "console",
-            "action": "print",
-            "args": {
-                "message": "John"
-            }
-        },
-        "Jane": {
-            "type": "console",
-            "action": "print",
-            "args": {
-                "message": "Jane"
+        "cases": {
+            "John": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "John"
+                }
+            },
+            "Jane": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Jane"
+                }
             }
         }
     }
