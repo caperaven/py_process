@@ -1,12 +1,16 @@
 import asyncio
 import src.process_api as process
 
-
-asyncio.run(process.call("loop", None, {
-    "source": [1, 2, 3, 4, 5],
-    "process_step": {
+asyncio.run(process.call("condition", None, {
+    "condition": "$c{firstName} == 'John'",
+    "pass_step": {
         "type": "console",
         "action": "print",
-        "args": {"message": "$i"}
+        "args": {"message": "pass"}
+    },
+    "fail_step": {
+        "type": "console",
+        "action": "print",
+        "args": {"message": "fail"}
     }
-}))
+}, {"firstName": 'John'}))

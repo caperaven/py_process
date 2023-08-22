@@ -1,11 +1,8 @@
 import pytest
-from src.action_systems.conditions.condition_actions import Default as ConditionActions
+from src.action_systems.condition_actions import Default as ConditionActions
 
-step = {
-    "type": "condition",
-    "args": {
-        "condition": "$c{firstName} == 'John'",
-    },
+args = {
+    "condition": "$c{firstName} == 'John'",
     "pass_step": {
         "type": "console",
         "action": "print",
@@ -37,7 +34,7 @@ async def test_condition_pass(monkeypatch):
         "firstName": "John"
     }
 
-    await ConditionActions.perform(step, context, None, None)
+    await ConditionActions.perform(args, context, None, None)
     assert printed_message == "pass"
 
 
@@ -55,5 +52,5 @@ async def test_condition_fail(monkeypatch):
         "firstName": "Jane"
     }
 
-    await ConditionActions.perform(step, context, None, None)
+    await ConditionActions.perform(args, context, None, None)
     assert printed_message == "fail"

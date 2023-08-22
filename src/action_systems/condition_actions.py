@@ -6,12 +6,10 @@ from src.process_api import process as api
 class Default:
 
     @staticmethod
-    async def perform(step, context=None, process=None, item=None):
-        args = step.get('args')
-
+    async def perform(args, context=None, process=None, item=None):
         condition = args.get('condition')
-        pass_step = await get_value(step.get('pass_step'), context, process, item)
-        fail_step = await get_value(step.get('fail_step'), context, process, item)
+        pass_step = args.get('pass_step')
+        fail_step = args.get('fail_step')
 
         result = conditions.exec(condition, context, process, item)
 
