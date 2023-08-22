@@ -12,7 +12,13 @@ async def test_console_print(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    await ConsoleActions.print({'message': 'Hello World'}, None, None, None)
+    step = {
+        "args": {
+            "message": "Hello World"
+        }
+    }
+
+    await ConsoleActions.print(step, None, None, None)
     assert printed_message == 'Hello World'
 
 
@@ -26,5 +32,11 @@ async def test_console_print_context(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    await ConsoleActions.print({'message': '$c{firstName}'}, {'firstName': 'John'}, None, None)
+    step = {
+        "args": {
+            "message": "$c{firstName}"
+        }
+    }
+
+    await ConsoleActions.print(step, {'firstName': 'John'}, None, None)
     assert printed_message == 'John'

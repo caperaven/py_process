@@ -1,4 +1,3 @@
-from src.utils.get_value import get_value
 from src.expressions.conditions import conditions
 from src.process_api import process as api
 
@@ -6,10 +5,11 @@ from src.process_api import process as api
 class Default:
 
     @staticmethod
-    async def perform(args, context=None, process=None, item=None):
+    async def perform(step, context=None, process=None, item=None):
+        args = step.get("args")
         condition = args.get('condition')
-        pass_step = args.get('pass_step')
-        fail_step = args.get('fail_step')
+        pass_step = step.get('pass_step')
+        fail_step = step.get('fail_step')
 
         result = conditions.exec(condition, context, process, item)
 

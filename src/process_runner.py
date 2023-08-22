@@ -25,7 +25,6 @@ class ProcessRunner:
     async def run_step(self, step, context=None, process=None, item=None):
         system_type = step.get('type')
         action = step.get('action')
-        args = step.get('args')
 
         module = None
         if system_type in self.modules:
@@ -39,7 +38,7 @@ class ProcessRunner:
 
         if hasattr(module, action):
             function = getattr(module, action)
-            result = await function(args, context, process, item)
+            result = await function(step, context, process, item)
 
             if "target" in step:
                 await set_value(step.get('target'), result, context, process, item)
