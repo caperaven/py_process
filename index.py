@@ -2,23 +2,12 @@ import asyncio
 import src.process_api as process
 
 args = {
-    "check": "$c{firstName}",
-    "cases": {
-        "John": {
-            "type": "console",
-            "action": "print",
-            "args": {
-                "message": "Hello John"
-            }
-        },
-        "Jane": {
-            "type": "console",
-            "action": "print",
-            "args": {
-                "message": "Greetings Jane"
-            }
-        }
-    }
+    "name": "text-classification",
+    "pipeline": {
+        "model": "distilbert-base-uncased-finetuned-sst-2-english"
+    },
+    "input": "I love you"
 }
 
-asyncio.run(process.call("switch", None, args, {"firstName": "John1"}))
+result = asyncio.run(process.call("ai", "perform", args))
+print(result)
