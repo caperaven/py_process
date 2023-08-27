@@ -1,0 +1,86 @@
+from src.utils.get_value import get_value
+import pandas as pd
+
+
+class DataCache:
+
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(DataCache, cls).__new__(cls)
+
+        return cls.instance
+
+    def __init__(self):
+        self.store = {}
+
+    def get(self, name):
+        return self.store.get(name, None)
+
+    def load(self, name, source):
+        if name in self.store:
+            return self.store[name]
+
+        # load the pandas from the source
+        data_frame = pd.read_csv(source)
+        self.store[name] = data_frame
+
+        return self.store[name]
+
+    def unload(self, name):
+        del self.store[name]
+
+    def call(self, name, method, args=None):
+        df = self.store[name]
+        method = getattr(df, method)
+
+        if (method is None):
+            return None
+
+        if args is None:
+            return method()
+        else:
+            return method(**args)
+
+    def get_perspective(self, name, perspective):
+        return self.store[name][perspective]
+
+
+data_cache = DataCache()
+
+
+class Default:
+
+    @staticmethod
+    async def load(step, context=None, process=None, item=None):
+        args = step["args"]
+        name = await get_value(args.get("name"), context, process, item)
+        source = await get_value(args.get("source"), context, process, item)
+        return data_cache.load(name, source)
+
+    @staticmethod
+    async def unload(step, context=None, process=None, item=None):
+        args = step["args"]
+        name = await get_value(args.get("name"), context, process, item)
+        data_cache.unload(name)
+        return True
+
+    @staticmethod
+    async def get(step, context=None, process=None, item=None):
+        args = step["args"]
+        name = await get_value(args.get("name"), context, process, item)
+        return data_cache.get(name)
+
+    @staticmethod
+    async def call(step, context=None, process=None, item=None):
+        args = step["args"]
+        name = await get_value(args.get("name"), context, process, item)
+        method = await get_value(args.get("method"), context, process, item)
+        args = await get_value(args.get("args"), context, process, item)
+        return data_cache.call(name, method, args)
+
+    @staticmethod
+    async def get_perspective(step, context=None, process=None, item=None):
+        args = step["args"]
+        name = await get_value(args.get("name"), context, process, item)
+        perspective = await get_value(args.get("perspective"), context, process, item)
+        return data_cache.get_perspective(name, perspective)
