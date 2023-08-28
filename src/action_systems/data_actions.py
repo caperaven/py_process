@@ -49,6 +49,21 @@ class DataCache:
             print(query)
             df = df.query(query)
 
+        if "sort" in perspective:
+            sort = perspective["sort"]
+            by_list = []
+            ascending_list = []
+
+            for key, value in sort.items():
+                by_list.append(key)
+                ascending_list.append(value == "asc")
+
+            df = df.sort_values(by=by_list, ascending=ascending_list)
+
+        if "group_by" in perspective:
+            group_by = perspective["group_by"]
+            df = df.groupby(group_by).sum()
+
         return df
 
 
