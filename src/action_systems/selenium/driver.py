@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
+from src.action_systems.selenium.wait import wait
 
 
 class Driver:
@@ -10,7 +11,18 @@ class Driver:
         if browser_fn is None:
             raise Exception(f"browser {browser} is not supported")
 
-        return await browser_fn(options)
+        driver = await browser_fn(options)
+
+        if "goto" in options:
+            url = options["goto"]
+            driver.get(url)
+
+        if "wait" in options:
+            await wait(driver, {
+                "query": options["wait"],
+            })
+
+        return driver
 
     @staticmethod
     async def close(driver):
