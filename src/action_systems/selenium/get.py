@@ -20,10 +20,32 @@ async def get(driver, args):
     return element
 
 
-async def get_element(context, query, timeout):
+async def get_element(driver, query, timeout):
     if isinstance(query, WebElement):
         return query
 
-    wait = WebDriverWait(context, timeout, poll_frequency=0.1)
-    element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, query)))
-    return element
+    if ' ' in query:
+        return await get_element_on_path(driver, query, timeout)
+    else:
+        wait = WebDriverWait(driver, timeout, poll_frequency=0.1)
+        element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, query)))
+        return element
+
+
+async def get_element_on_path(driver, query, timeout):
+    queries = query.split(" ")
+    context = driver
+
+    for query in queries:
+        element = await get_element(context, query, timeout)
+
+        if element is None:
+            return None
+
+        context = element
+        shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
+
+        if shadow_root is not None:
+            context = element.shadow_root
+
+    return context
