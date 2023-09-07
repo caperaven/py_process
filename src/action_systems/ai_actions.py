@@ -1,4 +1,4 @@
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer, AutoConfig
 from src.utils.get_value import get_value
 
 
@@ -20,6 +20,12 @@ class PipelineCache:
         if name in self.store:
             return self.store[name]
 
+        model = pipeline_settings.get("model", None)
+        tokenizer = AutoTokenizer.from_pretrained(model)
+        config = AutoConfig.from_pretrained(model)
+
+        pipeline_settings["tokenizer"] = tokenizer
+        pipeline_settings["config"] = config
         self.store[name] = pipeline(**pipeline_settings)
         return self.store[name]
 

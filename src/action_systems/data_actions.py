@@ -46,7 +46,6 @@ class DataCache:
 
         if "filter" in perspective:
             query = format_filter(perspective["filter"])
-            print(query)
             df = df.query(query)
 
         if "sort" in perspective:
@@ -71,12 +70,12 @@ data_cache = DataCache()
 
 
 def format_filter(filter):
-    filter = filter.replace("eq", "==")
-    filter = filter.replace("gt", ">")
-    filter = filter.replace("lt", "<")
-    filter = filter.replace("gte", ">=")
-    filter = filter.replace("lte", "<=")
-    filter = filter.replace("ne", "!=")
+    filter = filter.replace(" eq ", " == ")
+    filter = filter.replace(" gt ", " > ")
+    filter = filter.replace(" lt ", " < ")
+    filter = filter.replace(" gte ", " >= ")
+    filter = filter.replace(" lte ", " <= ")
+    filter = filter.replace(" ne ", " != ")
     return filter
 
 class Default:
