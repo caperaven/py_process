@@ -36,11 +36,13 @@ class Driver:
     @staticmethod
     async def firefox(options):
         opts = webdriver.FirefoxOptions()
-        opts.add_argument("start-maximized")
-        opts.add_argument("ignore-certificate-errors")
 
-        driver = webdriver.Firefox()
-        pass
+        if options is not None and "arguments" in options:
+            for arg in options["arguments"]:
+                opts.add_argument(arg)
+
+        driver = webdriver.Firefox(options=opts)
+        return driver
 
     @staticmethod
     async def edge(options):
