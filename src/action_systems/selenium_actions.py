@@ -1,5 +1,9 @@
 from src.action_systems.selenium.driver import Driver
 from src.action_systems.selenium.navigate import goto
+from src.action_systems.selenium.get import get
+from src.action_systems.selenium.set import set
+from src.action_systems.selenium.wait import wait
+from src.action_systems.selenium.perform import perform
 from src.utils.get_value import get_value
 
 
@@ -31,12 +35,20 @@ class Default:
 
     @staticmethod
     async def get(step, context=None, process=None, item=None):
-        pass
+        driver = await get_driver(step, context, process, item)
+        return await get(driver, step["args"])
 
     @staticmethod
     async def set(step, context=None, process=None, item=None):
-        pass
+        driver = await get_driver(step, context, process, item)
+        return await set(driver, step["args"])
 
     @staticmethod
     async def wait(step, context=None, process=None, item=None):
-        pass
+        driver = await get_driver(step, context, process, item)
+        return await wait(driver, step["args"])
+
+    @staticmethod
+    async def perform(step, context=None, process=None, item=None):
+        driver = await get_driver(step, context, process, item)
+        return await perform(driver, step["args"])
