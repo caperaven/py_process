@@ -36,15 +36,22 @@ async def get_element_on_path(driver, query, timeout):
     context = driver
 
     for query in queries:
+        use_shadow_root = query.endswith("::host")
+
+        if use_shadow_root:
+            query = query[:-6]
+
         element = await get_element(context, query, timeout)
 
         if element is None:
             return None
 
         context = element
-        shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
 
-        if shadow_root is not None:
-            context = element.shadow_root
+        if use_shadow_root:
+            shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
+
+            if shadow_root is not None:
+                context = element.shadow_root
 
     return context
