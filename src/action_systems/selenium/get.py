@@ -11,8 +11,7 @@ async def get(driver, args):
     element = await get_element(context, query, timeout)
 
     if "attribute" in args:
-        attribute = args["attribute"]
-        return element.get_attribute(attribute)
+        return element.get_attribute(args["attribute"])
 
     if "property" in args:
         return element.get_property(args["property"])

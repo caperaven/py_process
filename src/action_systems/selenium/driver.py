@@ -19,7 +19,7 @@ class Driver:
 
         if "wait" in options:
             await wait(driver, {
-                "query": options["wait"],
+                "query": options["wait"]
             })
 
         return driver
@@ -54,6 +54,7 @@ class Driver:
                 opts.add_argument(arg)
 
         driver = webdriver.Firefox(options=opts)
+        driver.maximize_window()
         return driver
 
     @staticmethod
