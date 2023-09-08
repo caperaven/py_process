@@ -6,4 +6,6 @@ async def wait(driver, args):
 
     if "query" in args:
         query = args["query"]
-        await get_element(driver, query, timeout)
+        element = await get_element(driver, query, timeout)
+        return element
+

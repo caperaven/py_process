@@ -11,7 +11,17 @@ async def perform(driver, args):
     element = await get_element(context, query, timeout)
     action = args["action"]
     chain = ActionChains(driver)
-    await Actions.__dict__[action](element, chain, args)
+    count = args.get("count", 1)
+
+    args["driver"] = driver
+
+    await Actions.scroll_into_view(element, chain, args)
+
+    for i in range(count):
+        await Actions.__dict__[action](element, chain, args)
+        time.sleep(0.1)
+
+    del args["driver"]
 
     if "wait" in args:
         await wait(driver, {
@@ -61,10 +71,9 @@ class Actions:
         chain.key_up(key).perform()
 
     @staticmethod
-    async def scroll(element, chain, args):
-        x = args["x"]
-        y = args["y"]
-        element.scroll(x, y)
+    async def scroll_into_view(element, chain, args):
+        driver = args["driver"]
+        driver.execute_script("arguments[0].scrollIntoView();", element)
 
     @staticmethod
     async def move_to(element, chain, args):
