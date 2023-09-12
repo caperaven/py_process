@@ -11,8 +11,8 @@ class ConditionModule:
     async def perform(api, step, context=None, process=None, item=None):
         args = step.get("args")
         condition = args.get('condition')
-        pass_step = step.get('pass_step')
-        fail_step = step.get('fail_step')
+        pass_step = args.get('pass_step')
+        fail_step = args.get('fail_step')
 
         result = conditions.exec(condition, context, process, item)
 
