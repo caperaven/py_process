@@ -63,4 +63,8 @@ class Driver:
 
     @staticmethod
     async def safari(options):
+        driver = webdriver.Safari()
+        driver.maximize_window()
+        driver.get("about:blank")
+        return driver
         pass

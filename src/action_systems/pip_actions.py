@@ -5,7 +5,8 @@ import subprocess
 class Default:
 
     @staticmethod
-    async def install(args, context=None, process=None, item=None):
+    async def install(step, context=None, process=None, item=None):
+        args = step["args"]
         package_name = await get_value(args.get("source"), context, process, item)
 
         try:

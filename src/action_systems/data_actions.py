@@ -78,6 +78,7 @@ def format_filter(filter):
     filter = filter.replace(" ne ", " != ")
     return filter
 
+
 class Default:
 
     @staticmethod

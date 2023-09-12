@@ -16,6 +16,9 @@ class Process:
     def __init__(self, modules=None):
         self.process_runner = ProcessRunner(modules)
 
+    async def add_module(self, name, module):
+        self.process_runner.modules[name] = module
+
     # This method is used to call a process step.
     async def call(self, step_type, step_action, step_args, context=None, process=None, item=None):
         step = {
