@@ -1,5 +1,8 @@
 import pytest
-from process_api.modules.console import Default as ConsoleActions
+from process_api import process_api
+from process_api.modules.console import ConsoleModule
+
+ConsoleModule.register(process_api)
 
 
 @pytest.mark.asyncio
@@ -18,7 +21,7 @@ async def test_console_print(monkeypatch):
         }
     }
 
-    await ConsoleActions.print(step, None, None, None)
+    await ConsoleModule.print(process_api, step, None, None, None)
     assert printed_message == 'Hello World'
 
 
@@ -38,5 +41,5 @@ async def test_console_print_context(monkeypatch):
         }
     }
 
-    await ConsoleActions.print(step, {'firstName': 'John'}, None, None)
+    await ConsoleModule.print(process_api, step, {'firstName': 'John'}, None, None)
     assert printed_message == 'John'
