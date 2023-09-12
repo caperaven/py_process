@@ -1,4 +1,5 @@
 from process_api.process_runner import ProcessRunner
+from process_api.schema_runner import SchemaRunner
 from process_api.modules import register
 
 
@@ -16,6 +17,7 @@ class ProcessAPI:
 
     def __init__(self):
         self.process_runner = ProcessRunner()
+        self.schema_runner = SchemaRunner()
 
     def add_module(self, name, module):
         self.process_runner.modules[name] = module

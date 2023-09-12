@@ -1,6 +1,5 @@
-import os
-
 from process_api.utils.set_value import set_value
+import os
 
 
 class ProcessRunner:
