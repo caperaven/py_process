@@ -7,7 +7,8 @@ class LoopModule:
         api.add_module("loop", LoopModule)
 
     @staticmethod
-    async def perform(api, args, context=None, process=None, item=None):
+    async def perform(api, step, context=None, process=None, item=None):
+        args = step.get("args")
         collection = await get_value(args.get("source"), context, process, item)
 
         if collection is None:
