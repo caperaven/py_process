@@ -1,5 +1,8 @@
 import pytest
-from process_api.modules.switch import Default as SwitchActions
+from process_api import process_api
+from process_api.modules.switch import SwitchModule
+
+SwitchModule.register(process_api)
 
 step = {
     "args": {
@@ -34,8 +37,8 @@ async def test_condition_pass(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    await SwitchActions.perform(step, {"firstName": "John"}, None, None)
+    await SwitchModule.perform(process_api, step, {"firstName": "John"}, None, None)
     assert printed_message == "John"
 
-    await SwitchActions.perform(step, {"firstName": "Jane"}, None, None)
+    await SwitchModule.perform(process_api, step, {"firstName": "Jane"}, None, None)
     assert printed_message == "Jane"

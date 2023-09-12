@@ -1,5 +1,5 @@
 import pytest
-from process_api.process_api import process
+from process_api import process_api
 
 
 @pytest.mark.asyncio
@@ -12,5 +12,5 @@ async def test_process_call(monkeypatch):
 
     monkeypatch.setattr('builtins.print', mock_print)
 
-    await process.call("console", "print", {"message": "Hello World"})
+    await process_api.call("console", "print", {"message": "Hello World"})
     assert printed_message == "Hello World"

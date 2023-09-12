@@ -1,15 +1,15 @@
 import asyncio
 
 
-from process_api.process_api import process
+from process_api import process_api
 
 
-asyncio.run(process.call("data", "load", {
+asyncio.run(process_api.call("data", "load", {
     "name": "pokemon",
     "source": "data/pokemon.csv"
 }))
 
-asyncio.run(process.call("data", "call", {
+asyncio.run(process_api.call("data", "call", {
     "name": "pokemon",
     "fn": "head"
 }))

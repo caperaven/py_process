@@ -1,22 +1,23 @@
 import pytest
-from process_api.modules.condition import Default as ConditionActions
+from process_api import process_api
+from process_api.modules.condition import ConditionModule
 
 step = {
     "args": {
         "condition": "$c{firstName} == 'John'",
-    },
-    "pass_step": {
-        "type": "console",
-        "action": "print",
-        "args": {
-            "message": "pass"
-        }
-    },
-    "fail_step": {
-        "type": "console",
-        "action": "print",
-        "args": {
-            "message": "fail"
+        "pass_step": {
+            "type": "console",
+            "action": "print",
+            "args": {
+                "message": "pass"
+            }
+        },
+        "fail_step": {
+            "type": "console",
+            "action": "print",
+            "args": {
+                "message": "fail"
+            }
         }
     }
 }
@@ -36,7 +37,7 @@ async def test_condition_pass(monkeypatch):
         "firstName": "John"
     }
 
-    await ConditionActions.perform(step, context, None, None)
+    await ConditionModule.perform(process_api, step, context, None, None)
     assert printed_message == "pass"
 
 
@@ -54,7 +55,7 @@ async def test_condition_fail(monkeypatch):
         "firstName": "Jane"
     }
 
-    await ConditionActions.perform(step, context, None, None)
+    await ConditionModule.perform(process_api, step, context, None, None)
     assert printed_message == "fail"
 
 
@@ -75,8 +76,8 @@ async def test_condition_process_step(monkeypatch):
     run_step = {
         "args": {
             "condition": "$c{firstName} == 'John'",
-        },
-        "pass_step": "pass"
+            "pass_step": "pass"
+        }
     }
 
     process = {
@@ -89,5 +90,5 @@ async def test_condition_process_step(monkeypatch):
         }
     }
 
-    await ConditionActions.perform(run_step, context, process, None)
+    await ConditionModule.perform(process_api, run_step, context, process, None)
     assert printed_message == "pass"
