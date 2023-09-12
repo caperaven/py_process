@@ -45,8 +45,8 @@ class AiModule:
 
     @staticmethod
     async def perform(api, step, context=None, process=None, item=None):
-        await AiModule.load(step, context, process, item)
-        return await AiModule.execute(step, context, process, item)
+        await AiModule.load(api, step, context, process, item)
+        return await AiModule.execute(api, step, context, process, item)
 
     @staticmethod
     async def load(api, step, context=None, process=None, item=None):
