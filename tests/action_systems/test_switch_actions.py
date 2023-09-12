@@ -1,5 +1,5 @@
 import pytest
-from src.action_systems.switch_actions import Default as SwitchActions
+from process_api.modules.switch import Default as SwitchActions
 
 step = {
     "args": {

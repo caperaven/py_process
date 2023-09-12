@@ -1,5 +1,6 @@
 from transformers import pipeline, AutoTokenizer, AutoConfig
-from src.utils.get_value import get_value
+
+from process_api.utils.get_value import get_value
 
 
 class PipelineCache:
@@ -36,14 +37,19 @@ class PipelineCache:
 pipeline_cache = PipelineCache()
 
 
-class Default:
-    @staticmethod
-    async def perform(step, context=None, process=None, item=None):
-        await Default.load(step, context, process, item)
-        return await Default.execute(step, context, process, item)
+class AiModule:
 
     @staticmethod
-    async def load(step, context=None, process=None, item=None):
+    def register(api):
+        api.add_module("ai", AiModule)
+
+    @staticmethod
+    async def perform(api, step, context=None, process=None, item=None):
+        await AiModule.load(step, context, process, item)
+        return await AiModule.execute(step, context, process, item)
+
+    @staticmethod
+    async def load(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         pipeline_settings = await get_value(args.get("pipeline"), context, process, item)
@@ -51,14 +57,14 @@ class Default:
         return True
 
     @staticmethod
-    async def unload(step, context=None, process=None, item=None):
+    async def unload(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         pipeline_cache.unload(name)
         return True
 
     @staticmethod
-    async def execute(step, context=None, process=None, item=None):
+    async def execute(api, step, context=None, process=None, item=None):
         args = step["args"]
         pipe_input = await get_value(args.get("input"), context, process, item)
 
@@ -70,3 +76,5 @@ class Default:
             return execute(**pipe_input)
         else:
             return execute(pipe_input)
+
+

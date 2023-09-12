@@ -1,4 +1,4 @@
-from src.expressions.sanitize import sanitize
+from process_api.expressions.sanitize import sanitize
 
 
 class Conditions:

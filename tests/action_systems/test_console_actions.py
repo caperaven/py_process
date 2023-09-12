@@ -1,5 +1,5 @@
 import pytest
-from src.action_systems.console_actions import Default as ConsoleActions
+from process_api.modules.console import Default as ConsoleActions
 
 
 @pytest.mark.asyncio

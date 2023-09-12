@@ -1,5 +1,5 @@
 import pytest
-from src.expressions.conditions import conditions
+from process_api.expressions.conditions import conditions
 
 
 @pytest.mark.asyncio

@@ -1,7 +1,7 @@
 import asyncio
 
 
-from src.process_api import process
+from process_api.process_api import process
 
 
 asyncio.run(process.call("data", "load", {

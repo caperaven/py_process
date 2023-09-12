@@ -1,5 +1,5 @@
 import pytest
-from src.action_systems.condition_actions import Default as ConditionActions
+from process_api.modules.condition import Default as ConditionActions
 
 step = {
     "args": {

@@ -1,11 +1,13 @@
-from src.utils.get_value import get_value
-from src.process_api import process as api
+from process_api.utils.get_value import get_value
 
 
-class Default:
+class LoopModule:
+    @staticmethod
+    def register(api):
+        api.add_module("loop", LoopModule)
 
     @staticmethod
-    async def perform(args, context=None, process=None, item=None):
+    async def perform(api, args, context=None, process=None, item=None):
         collection = await get_value(args.get("source"), context, process, item)
 
         if collection is None:

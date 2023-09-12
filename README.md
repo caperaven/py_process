@@ -1,4 +1,6 @@
 # py_process
 
 ## Testing
-All tests are run using pytest. To run all tests, run `pytest` in the root directory of the project.
+This library enables process api extendable functionality.
+Processes can be defined using code or json files.
+This is part of intent driven development and the intellectual property of the author (caperaven).

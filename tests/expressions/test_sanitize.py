@@ -1,5 +1,5 @@
 import pytest
-from src.expressions.sanitize import sanitize, SanitizeTypes
+from process_api.expressions.sanitize import sanitize
 
 
 @pytest.mark.asyncio

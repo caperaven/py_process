@@ -1,5 +1,5 @@
 import pytest
-from src.action_systems.loop_actions import Default as LoopActions
+from process_api.modules.loop import Default as LoopActions
 
 
 @pytest.mark.asyncio

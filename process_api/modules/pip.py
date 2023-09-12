@@ -1,11 +1,15 @@
-from src.utils.get_value import get_value
 import subprocess
 
+from process_api.utils.get_value import get_value
 
-class Default:
+
+class PipModule:
+    @staticmethod
+    def register(api):
+        api.register_action("pip", PipModule)
 
     @staticmethod
-    async def install(step, context=None, process=None, item=None):
+    async def install(api, step, context=None, process=None, item=None):
         args = step["args"]
         package_name = await get_value(args.get("source"), context, process, item)
 

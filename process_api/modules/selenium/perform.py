@@ -1,7 +1,7 @@
 import time
 from selenium.webdriver import Keys, ActionChains
-from src.action_systems.selenium.get import get_element
-from src.action_systems.selenium.wait import wait
+from process_api.modules.selenium.get import get_element
+from process_api.modules.selenium.wait import wait
 
 
 async def perform(driver, args):

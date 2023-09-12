@@ -1,22 +1,23 @@
-from src.process_runner import ProcessRunner
+from process_api.process_runner import ProcessRunner
+from process_api.modules import register
 
 
 # This class is a wrapper around the ProcessRunner class.
 # It is used to make the process_runner module more accessible.
 # Since process steps can be called from anywhere in the code, including other modules,
 # use the process variable to call process steps.
-class Process:
+class ProcessAPI:
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
-            cls.instance = super(Process, cls).__new__(cls)
+            cls.instance = super(ProcessAPI, cls).__new__(cls)
 
         return cls.instance
 
-    def __init__(self, modules=None):
-        self.process_runner = ProcessRunner(modules)
+    def __init__(self):
+        self.process_runner = ProcessRunner()
 
-    async def add_module(self, name, module):
+    def add_module(self, name, module):
         self.process_runner.modules[name] = module
 
     # This method is used to call a process step.
@@ -27,11 +28,12 @@ class Process:
             "args": step_args
         }
 
-        return await self.process_runner.run_step(step, context, process, item)
+        return await self.process_runner.run_step(self, step, context, process, item)
 
     async def run(self, step, context, process, item):
-        return await self.process_runner.run_step(step, context, process, item)
+        return await self.process_runner.run_step(self, step, context, process, item)
 
 
-process = Process()
-call = process.call
+process_api = ProcessAPI()
+call = process_api.call
+register(process_api)

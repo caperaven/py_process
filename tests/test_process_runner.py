@@ -1,5 +1,5 @@
 import pytest
-from src.process_runner import ProcessRunner
+from process_api.process_runner import ProcessRunner
 
 
 @pytest.mark.asyncio

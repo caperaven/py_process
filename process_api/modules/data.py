@@ -1,5 +1,5 @@
-from src.utils.get_value import get_value
 import pandas as pd
+from process_api.utils.get_value import get_value
 
 
 class DataCache:
@@ -69,40 +69,43 @@ class DataCache:
 data_cache = DataCache()
 
 
-def format_filter(filter):
-    filter = filter.replace(" eq ", " == ")
-    filter = filter.replace(" gt ", " > ")
-    filter = filter.replace(" lt ", " < ")
-    filter = filter.replace(" gte ", " >= ")
-    filter = filter.replace(" lte ", " <= ")
-    filter = filter.replace(" ne ", " != ")
-    return filter
+def format_filter(filter_expr):
+    filter_expr = filter_expr.replace(" eq ", " == ")
+    filter_expr = filter_expr.replace(" gt ", " > ")
+    filter_expr = filter_expr.replace(" lt ", " < ")
+    filter_expr = filter_expr.replace(" gte ", " >= ")
+    filter_expr = filter_expr.replace(" lte ", " <= ")
+    filter_expr = filter_expr.replace(" ne ", " != ")
+    return filter_expr
 
 
-class Default:
+class DataModule:
+    @staticmethod
+    def register(api):
+        api.add_module("data", DataModule)
 
     @staticmethod
-    async def load(step, context=None, process=None, item=None):
+    async def load(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         source = await get_value(args.get("source"), context, process, item)
         return data_cache.load(name, source)
 
     @staticmethod
-    async def unload(step, context=None, process=None, item=None):
+    async def unload(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         data_cache.unload(name)
         return True
 
     @staticmethod
-    async def get(step, context=None, process=None, item=None):
+    async def get(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         return data_cache.get(name)
 
     @staticmethod
-    async def call(step, context=None, process=None, item=None):
+    async def call(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         method = await get_value(args.get("method"), context, process, item)
@@ -110,8 +113,10 @@ class Default:
         return data_cache.call(name, method, args)
 
     @staticmethod
-    async def get_perspective(step, context=None, process=None, item=None):
+    async def get_perspective(api, step, context=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), context, process, item)
         perspective = await get_value(args.get("perspective"), context, process, item)
         return data_cache.get_perspective(name, perspective)
+
+
