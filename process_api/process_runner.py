@@ -9,7 +9,7 @@ class ProcessRunner:
         self.current_script_path = os.path.abspath(__file__)
         self.current_directory = os.path.dirname(self.current_script_path)
 
-    async def run_step(self, api, step, context=None, process=None, item=None):
+    async def run_step(self, api, step, ctx=None, process=None, item=None):
         system_type = step.get('type')
         action = step.get('action')
 
@@ -24,10 +24,10 @@ class ProcessRunner:
 
         if hasattr(module, action):
             function = getattr(module, action)
-            result = await function(api, step, context, process, item)
+            result = await function(api, step, ctx, process, item)
 
             if "target" in step:
-                await set_value(step.get('target'), result, context, process, item)
+                await set_value(step.get('target'), result, ctx, process, item)
 
             return result
         else:

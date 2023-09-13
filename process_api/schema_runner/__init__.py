@@ -1,3 +1,5 @@
+import json
+
 # Purpose: SchemaRunner class
 # Run processes using a json file to define the intent.
 # You can register schemas and templates to be used in the json file.
@@ -19,6 +21,12 @@ async def run_process(api, process, parameters):
     pass
 
 
+async def load_json(filename):
+    with open(filename, 'r') as json_file:
+        data_dict = json.load(json_file)
+        return data_dict
+
+
 async def run_schema(api, json):
     sequence = json.get('sequence', None)
     main = json.get('main', None)
@@ -38,6 +46,10 @@ async def run_schema(api, json):
 class SchemaRunner:
     templates = {}
     schemas = {}
+
+    async def run_from_file(self, api, filename, ctx=None):
+        schema = await load_json(filename)
+        return schema
 
     async def run_schema(self, api, json):
         await run_process(api, json)

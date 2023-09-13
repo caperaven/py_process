@@ -1,13 +1,13 @@
 from process_api.utils.prefixes import CONTEXT_PREFIX, PROCESS_PARAMETERS_PREFIX, PROCESS_DATA_PREFIX, ITEM_PREFIX
 
 
-async def get_value(value=None, context=None, process=None, item=None):
+async def get_value(value=None, ctx=None, process=None, item=None):
     if value is None:
         return None
 
     if isinstance(value, str):
         if value == "$c":
-            return context
+            return ctx
 
         if value == "$p":
             return get_property_on_path(process, ["parameters"])
@@ -19,8 +19,8 @@ async def get_value(value=None, context=None, process=None, item=None):
             return item
 
         # if the value starts with $c{, then it is a context variable
-        if value.startswith(CONTEXT_PREFIX) and context is not None:
-            return get_property_on_path(context, value[3:-1].split("."))
+        if value.startswith(CONTEXT_PREFIX) and ctx is not None:
+            return get_property_on_path(ctx, value[3:-1].split("."))
 
         # if the value starts with $p{, then it is a process parameters variable
         if value.startswith(PROCESS_PARAMETERS_PREFIX) and process is not None and hasattr(process, "parameters"):

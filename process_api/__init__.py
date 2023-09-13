@@ -23,14 +23,14 @@ class ProcessAPI:
         self.process_runner.modules[name] = module
 
     # This method is used to call a process step.
-    async def call(self, step_type, step_action, step_args, context=None, process=None, item=None):
+    async def call(self, step_type, step_action, step_args, ctx=None, process=None, item=None):
         step = {
             "type": step_type,
             "action": step_action,
             "args": step_args
         }
 
-        return await self.process_runner.run_step(self, step, context, process, item)
+        return await self.process_runner.run_step(self, step, ctx, process, item)
 
     async def run(self, step, context, process, item):
         return await self.process_runner.run_step(self, step, context, process, item)

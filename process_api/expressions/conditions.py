@@ -13,18 +13,18 @@ class Conditions:
         self.store = {}
         self.globals: dict[str, any] = {}
 
-    def exec(self, condition, context=None, process=None, item=None):
+    def exec(self, condition, ctx=None, process=None, item=None):
         fn = self.store.get(condition)
 
         if fn:
-            return fn(context, process, item)
+            return fn(ctx, process, item)
 
         sanitized = sanitize(condition)
 
         code_str = f"lambda context, process, item: {sanitized}"
         dynamic_function = eval(compile(code_str, "<string>", "eval"))
         self.store[condition] = dynamic_function
-        result = dynamic_function(context, process, item)
+        result = dynamic_function(ctx, process, item)
         return result
 
 

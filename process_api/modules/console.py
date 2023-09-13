@@ -7,9 +7,9 @@ class ConsoleModule:
         api.add_module("console", ConsoleModule)
 
     @staticmethod
-    async def print(api, step, context=None, process=None, item=None):
+    async def print(api, step, ctx=None, process=None, item=None):
         args = step.get("args")
-        message = await get_value(args.get('message'), context, process, item)
+        message = await get_value(args.get('message'), ctx, process, item)
         print(message)
         return True
 

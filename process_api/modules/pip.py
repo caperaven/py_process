@@ -9,9 +9,9 @@ class PipModule:
         api.register_action("pip", PipModule)
 
     @staticmethod
-    async def install(api, step, context=None, process=None, item=None):
+    async def install(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        package_name = await get_value(args.get("source"), context, process, item)
+        package_name = await get_value(args.get("source"), ctx, process, item)
 
         try:
             # Run the pip install command

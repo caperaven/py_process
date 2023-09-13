@@ -44,29 +44,29 @@ class AiModule:
         api.add_module("ai", AiModule)
 
     @staticmethod
-    async def perform(api, step, context=None, process=None, item=None):
-        await AiModule.load(api, step, context, process, item)
-        return await AiModule.execute(api, step, context, process, item)
+    async def perform(api, step, ctx=None, process=None, item=None):
+        await AiModule.load(api, step, ctx, process, item)
+        return await AiModule.execute(api, step, ctx, process, item)
 
     @staticmethod
-    async def load(api, step, context=None, process=None, item=None):
+    async def load(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
-        pipeline_settings = await get_value(args.get("pipeline"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
+        pipeline_settings = await get_value(args.get("pipeline"), ctx, process, item)
         pipeline_cache.load(name, pipeline_settings)
         return True
 
     @staticmethod
-    async def unload(api, step, context=None, process=None, item=None):
+    async def unload(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
         pipeline_cache.unload(name)
         return True
 
     @staticmethod
-    async def execute(api, step, context=None, process=None, item=None):
+    async def execute(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        pipe_input = await get_value(args.get("input"), context, process, item)
+        pipe_input = await get_value(args.get("input"), ctx, process, item)
 
         execute = pipeline_cache.get(args.get("name"))
         if execute is None:

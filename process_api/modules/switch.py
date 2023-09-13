@@ -9,12 +9,12 @@ class SwitchModule:
         api.add_module("switch", SwitchModule)
 
     @staticmethod
-    async def perform(api, step, context=None, process=None, item=None):
+    async def perform(api, step, ctx=None, process=None, item=None):
         args = step.get("args")
-        cases = await get_value(args.get('cases'), context, process, item)
-        value = await get_value(args.get('check'), context, process, item)
+        cases = await get_value(args.get('cases'), ctx, process, item)
+        value = await get_value(args.get('check'), ctx, process, item)
 
         step_to_run = cases.get(value)
 
         if value is not None:
-            await run_step(api, step_to_run, context, process, item)
+            await run_step(api, step_to_run, ctx, process, item)

@@ -85,38 +85,38 @@ class DataModule:
         api.add_module("data", DataModule)
 
     @staticmethod
-    async def load(api, step, context=None, process=None, item=None):
+    async def load(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
-        source = await get_value(args.get("source"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
+        source = await get_value(args.get("source"), ctx, process, item)
         return data_cache.load(name, source)
 
     @staticmethod
-    async def unload(api, step, context=None, process=None, item=None):
+    async def unload(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
         data_cache.unload(name)
         return True
 
     @staticmethod
-    async def get(api, step, context=None, process=None, item=None):
+    async def get(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
         return data_cache.get(name)
 
     @staticmethod
-    async def call(api, step, context=None, process=None, item=None):
+    async def call(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
-        method = await get_value(args.get("method"), context, process, item)
-        args = await get_value(args.get("args"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
+        method = await get_value(args.get("method"), ctx, process, item)
+        args = await get_value(args.get("args"), ctx, process, item)
         return data_cache.call(name, method, args)
 
     @staticmethod
-    async def get_perspective(api, step, context=None, process=None, item=None):
+    async def get_perspective(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = await get_value(args.get("name"), context, process, item)
-        perspective = await get_value(args.get("perspective"), context, process, item)
+        name = await get_value(args.get("name"), ctx, process, item)
+        perspective = await get_value(args.get("perspective"), ctx, process, item)
         return data_cache.get_perspective(name, perspective)
 
 
