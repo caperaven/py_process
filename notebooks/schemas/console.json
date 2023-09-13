@@ -1,0 +1,24 @@
+{
+    "id": "console-test",
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Hello World"
+                },
+                "next_step": "second"
+            },
+
+            "second": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Second message"
+                }
+            }
+        }
+    }
+}

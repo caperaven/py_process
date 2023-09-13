@@ -29,6 +29,12 @@ class ProcessRunner:
             if "target" in step:
                 await set_value(step.get('target'), result, ctx, process, item)
 
+            if "next_step" in step:
+                next_step_name = step["next_step"]
+                next_step = process["steps"][next_step_name]
+                return await self.run_step(api, next_step, ctx, process, item)
+
             return result
         else:
             print(f"{action} not found in the imported module.")
+
