@@ -47,7 +47,7 @@ async def run_schema(api, schema, ctx=None, parameters=None):
         for process in sequence:
             await run_process(api, schema, process, ctx, parameters)
 
-    elif "main" is not None:
+    elif "main" in schema:
         await run_process(api, schema, "main", ctx, parameters)
 
     pass
@@ -57,10 +57,9 @@ class SchemaRunner:
     templates = {}
     schemas = {}
 
-    async def run_from_file(self, api, filename, ctx=None):
+    async def run_from_file(self, api, filename, ctx=None, parameters=None):
         schema = await load_json(filename)
-        await self.run_schema(api, schema, ctx)
-        return schema
+        await self.run_schema(api, schema, ctx, parameters)
 
     async def run_schema(self, api, schema, ctx=None, parameters=None):
         await run_process(api, schema, "main", ctx, parameters)
