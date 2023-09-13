@@ -9,7 +9,6 @@ import json
 
 async def process_parameters(process, parameters, ctx=None):
     parameters_def = process.get("parameters_def")
-
     pass
 
 
@@ -26,6 +25,17 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None):
     await api.run(start_step, ctx, process, None)
 
 
+async def run_schema(api, schema, ctx=None, parameters=None):
+    sequence = schema.get('sequence', None)
+
+    if sequence is not None:
+        for process in sequence:
+            await run_process(api, schema, process, ctx, parameters)
+
+    elif "main" in schema:
+        await run_process(api, schema, "main", ctx, parameters)
+
+
 async def load_json(file_path):
     try:
         file = open(file_path, 'r')
@@ -39,20 +49,6 @@ async def load_json(file_path):
         print(f"An error occurred: {e}")
 
 
-async def run_schema(api, schema, ctx=None, parameters=None):
-    sequence = schema.get('sequence', None)
-    main = schema.get('main', None)
-
-    if sequence is not None:
-        for process in sequence:
-            await run_process(api, schema, process, ctx, parameters)
-
-    elif "main" in schema:
-        await run_process(api, schema, "main", ctx, parameters)
-
-    pass
-
-
 class SchemaRunner:
     templates = {}
     schemas = {}
@@ -62,7 +58,10 @@ class SchemaRunner:
         await self.run_schema(api, schema, ctx, parameters)
 
     async def run_schema(self, api, schema, ctx=None, parameters=None):
-        await run_process(api, schema, "main", ctx, parameters)
+        await run_schema(api, schema, ctx, parameters)
+
+    async def run_process(self, api, schema, process_name, ctx=None, parameters=None):
+        await run_process(api, schema, process_name, ctx, parameters)
 
     async def add_schema(self, schema):
         name = schema.get('id')

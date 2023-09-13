@@ -1,0 +1,29 @@
+{
+    "id": "console-test",
+
+    "sequence": ["process_1", "process_2"],
+
+    "process_1": {
+        "steps": {
+            "start": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Process 1"
+                }
+            }
+        }
+    },
+
+    "process_2": {
+        "steps": {
+            "start": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Process 2"
+                }
+            }
+        }
+    }
+}
