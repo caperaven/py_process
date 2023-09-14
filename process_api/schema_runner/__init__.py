@@ -7,7 +7,7 @@ import json
 # You can also add a schema to the store if you want to use a greater schema to call other processes.
 
 
-async def process_parameters(process, parameters, ctx=None):
+async def process_parameters(process, parameters):
     parameters_def = process.get("parameters_def")
     schema_parameters = {}
 
@@ -41,18 +41,18 @@ async def process_parameters(process, parameters, ctx=None):
     process["parameters"] = schema_parameters
 
 
-async def run_process(api, schema, process_name, ctx=None, parameters=None):
+async def run_process(api, schema, process_name, ctx=None, parameters=None, item=None):
     process = schema.get(process_name, None)
 
     # make a copy of the process
     process = process.copy()
 
     if "parameters_def" in process:
-        await process_parameters(process, parameters, ctx=None)
+        await process_parameters(process, parameters)
         del process["parameters_def"]
 
     start_step = process["steps"]["start"]
-    await api.run(start_step, ctx, process, None)
+    await api.run(start_step, ctx, process, item)
 
 
 async def run_schema(api, schema, ctx=None, parameters=None):
