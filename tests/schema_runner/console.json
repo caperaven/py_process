@@ -1,0 +1,15 @@
+{
+    "id": "console-test",
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Message from file"
+                }
+            }
+        }
+    }
+}
