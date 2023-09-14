@@ -1,6 +1,6 @@
 import time
 from selenium.webdriver import Keys, ActionChains
-from process_api.modules.selenium.get import get_element
+from process_api.modules.selenium.automation.get import get_element
 
 
 async def perform(driver, args):

@@ -1,9 +1,4 @@
-from process_api.modules.selenium.driver import DriverActions
-from process_api.modules.selenium.navigate import goto
-from process_api.modules.selenium.get import get
-from process_api.modules.selenium.set import set
-from process_api.modules.selenium.wait import wait
-from process_api.modules.selenium.perform import perform
+from process_api.modules.selenium.automation import DriverActions, goto, get, set, wait, perform
 from process_api.utils.get_value import get_value
 from process_api.modules.selenium.modules import register as register_modules
 

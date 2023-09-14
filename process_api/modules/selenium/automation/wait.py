@@ -1,4 +1,4 @@
-from process_api.modules.selenium.get import get_element
+from process_api.modules.selenium.automation.get import get_element
 
 
 async def wait(driver, args):

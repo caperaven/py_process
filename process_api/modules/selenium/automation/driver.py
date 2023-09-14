@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from process_api.modules.selenium.wait import wait
+from process_api.modules.selenium.automation.wait import wait
 
 
 class DriverActions:
