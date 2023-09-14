@@ -59,7 +59,7 @@ async def test_number_parameter():
 async def test_boolean_parameter():
     process = {"parameters_def": {"name": {"type": "boolean"}}}
     await process_parameters(process, {"name": True})
-    assert (process["parameters"]["name"] == True)
+    assert (process["parameters"]["name"] is True)
 
 
 async def test_object_parameter():
