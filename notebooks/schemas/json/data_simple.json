@@ -1,6 +1,10 @@
 {
     "id": "data-simple",
 
+    "required_modules": [
+        "process_api.modules.data:DataModule"
+    ],
+
     "main": {
         "parameters_def": {
             "source": {

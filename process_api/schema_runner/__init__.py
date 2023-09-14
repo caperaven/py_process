@@ -1,4 +1,5 @@
 import json
+from process_api.utils.register_module import register_module
 
 # Purpose: SchemaRunner class
 # Run processes using a json file to define the intent.
@@ -57,6 +58,11 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None, item
 
 async def run_schema(api, schema, ctx=None, parameters=None):
     sequence = schema.get('sequence', None)
+    required_modules = schema.get('required_modules', None)
+
+    if required_modules is not None:
+        for module_path in required_modules:
+            register_module(api, module_path)
 
     if sequence is not None:
         result = None
