@@ -52,18 +52,21 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None, item
         del process["parameters_def"]
 
     start_step = process["steps"]["start"]
-    await api.run(start_step, ctx, process, item)
+    return await api.run(start_step, ctx, process, item)
 
 
 async def run_schema(api, schema, ctx=None, parameters=None):
     sequence = schema.get('sequence', None)
 
     if sequence is not None:
+        result = None
         for process in sequence:
-            await run_process(api, schema, process, ctx, parameters)
+            result = await run_process(api, schema, process, ctx, parameters)
+
+        return result
 
     elif "main" in schema:
-        await run_process(api, schema, "main", ctx, parameters)
+        return await run_process(api, schema, "main", ctx, parameters)
 
 
 async def load_json(file_path):
@@ -85,13 +88,13 @@ class SchemaRunnerManager:
 
     async def run_from_file(self, api, filename, ctx=None, parameters=None):
         schema = await load_json(filename)
-        await self.run_schema(api, schema, ctx, parameters)
+        return await self.run_schema(api, schema, ctx, parameters)
 
     async def run_schema(self, api, schema, ctx=None, parameters=None):
-        await run_schema(api, schema, ctx, parameters)
+        return await run_schema(api, schema, ctx, parameters)
 
     async def run_process(self, api, schema, process_name, ctx=None, parameters=None):
-        await run_process(api, schema, process_name, ctx, parameters)
+        return await run_process(api, schema, process_name, ctx, parameters)
 
     async def add_schema(self, schema):
         name = schema.get('id')
