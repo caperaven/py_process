@@ -9,6 +9,15 @@
                 "args": {
                     "url": "http://127.0.0.1:8080/web/",
                     "wait": "h1"
+                },
+                "next_step": "click_on_heading"
+            },
+
+            "click_on_heading": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": "h1"
                 }
             }
         }

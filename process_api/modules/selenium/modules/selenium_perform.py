@@ -15,6 +15,7 @@ class PerformModule:
 
     @staticmethod
     async def close_window(api, step, ctx=None, process=None, item=None):
+        await api.call("selenium", "close_driver", step, ctx, process, item)
         pass
 
     @staticmethod
@@ -24,6 +25,9 @@ class PerformModule:
 
     @staticmethod
     async def click(api, step, ctx=None, process=None, item=None):
+        args = step["args"].copy()
+        args["action"] = "click"
+        await api.call("selenium", "perform", args, ctx, process, item)
         pass
 
     @staticmethod

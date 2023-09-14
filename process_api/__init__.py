@@ -1,3 +1,4 @@
+import traceback
 from process_api.process_runner import ProcessRunner
 from process_api.schema_runner import SchemaRunnerManager
 from process_api.modules import register
@@ -60,11 +61,17 @@ class ProcessAPI:
     # This method is used to call a process step.
     # In this case you pass on a dictionary that defines the step, including the type, action and args.
     async def run(self, step, ctx=None, process=None, item=None):
-        return await self.process_runner.run_step(self, step, ctx, process, item)
+        try:
+            return await self.process_runner.run_step(self, step, ctx, process, item)
+        except Exception:
+            raise traceback.print_exc()
 
-    # THis method is used to load a process schema definition from file and execute the schema as a whole.
+    # This method is used to load a process schema definition from file and execute the schema as a whole.
     async def run_from_file(self, api, filename, ctx=None, parameters=None):
-        return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
+        try:
+            return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
+        except Exception:
+            raise traceback.print_exc()
 
 
 process_api = ProcessAPI()
