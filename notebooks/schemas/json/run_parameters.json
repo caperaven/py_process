@@ -1,0 +1,22 @@
+{
+    "id": "parameter_test",
+
+    "main": {
+        "parameters_def": {
+            "message": {
+                "type": "string",
+                "required": true
+            }
+        },
+
+        "steps": {
+            "start": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "$p{message}"
+                }
+            }
+        }
+    }
+}

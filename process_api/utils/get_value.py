@@ -23,12 +23,12 @@ async def get_value(value=None, ctx=None, process=None, item=None):
             return get_property_on_path(ctx, value[3:-1].split("."))
 
         # if the value starts with $p{, then it is a process parameters variable
-        if value.startswith(PROCESS_PARAMETERS_PREFIX) and process is not None and hasattr(process, "parameters"):
-            return get_property_on_path(process.parameters, value[3:-1].split("."))
+        if value.startswith(PROCESS_PARAMETERS_PREFIX) and process is not None:
+            return get_property_on_path(process["parameters"], value[3:-1].split("."))
 
         # if the value starts with $d{, then it is a process data variable
-        if value.startswith(PROCESS_DATA_PREFIX) and process is not None and hasattr(process, "data"):
-            return get_property_on_path(process.data, value[3:-1].split("."))
+        if value.startswith(PROCESS_DATA_PREFIX) and process is not None:
+            return get_property_on_path(process["data"], value[3:-1].split("."))
 
         # if the value starts with $i{, then it is an item variable
         if value.startswith(ITEM_PREFIX) and item is not None:
