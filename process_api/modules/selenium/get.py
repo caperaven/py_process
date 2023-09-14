@@ -27,8 +27,11 @@ async def get_element(driver, query, timeout):
         return await get_element_on_path(driver, query, timeout)
     else:
         wait = WebDriverWait(driver, timeout, poll_frequency=0.1)
-        element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, query)))
-        return element
+        try:
+            element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, query)))
+            return element
+        except Exception as e:
+            print(e)
 
 
 async def get_element_on_path(driver, query, timeout):

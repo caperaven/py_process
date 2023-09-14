@@ -1,7 +1,6 @@
 import time
 from selenium.webdriver import Keys, ActionChains
 from process_api.modules.selenium.get import get_element
-from process_api.modules.selenium.wait import wait
 
 
 async def perform(driver, args):
@@ -13,20 +12,11 @@ async def perform(driver, args):
     chain = ActionChains(driver)
     count = args.get("count", 1)
 
-    args["driver"] = driver
-
     await Actions.scroll_into_view(element, chain, args)
 
     for i in range(count):
         await Actions.__dict__[action](element, chain, args)
         time.sleep(0.1)
-
-    del args["driver"]
-
-    if "wait" in args:
-        await wait(driver, {
-            "query": args["wait"]
-        })
 
 
 class Actions:

@@ -11,6 +11,8 @@ from process_api.modules import register
 # Those modules have functions and we need a way to call those functions to execute the intent.
 class ProcessAPI:
 
+    variables = {}
+
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(ProcessAPI, cls).__new__(cls)
@@ -20,6 +22,15 @@ class ProcessAPI:
     def __init__(self):
         self.process_runner = ProcessRunner()
         self.schema_runner = SchemaRunnerManager()
+
+    def set_variable(self, name, value):
+        self.variables[name] = value
+
+    def get_variable(self, name):
+        return self.variables[name]
+
+    def delete_variable(self, name):
+        del self.variables[name]
 
     # This method is used to add a module to the process api.
     # The module is a class that contains functions that can be called from the process steps.

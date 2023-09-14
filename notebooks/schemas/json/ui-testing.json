@@ -1,0 +1,16 @@
+{
+    "id": "ui-testing",
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8080/web/",
+                    "wait": "h1"
+                }
+            }
+        }
+    }
+}

@@ -7,7 +7,7 @@ class PerformModule:
 
     @staticmethod
     async def navigate(api, step, ctx=None, process=None, item=None):
-        return await api.call("selenium", "goto", step["args"], ctx, process, item)
+        await api.call("selenium", "goto", step["args"], ctx, process, item)
 
     @staticmethod
     async def open_and_close_url(api, step, ctx=None, process=None, item=None):

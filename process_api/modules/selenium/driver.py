@@ -3,10 +3,10 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from process_api.modules.selenium.wait import wait
 
 
-class Driver:
+class DriverActions:
     @staticmethod
     async def init(browser, options=None):
-        browser_fn = getattr(Driver, browser)
+        browser_fn = getattr(DriverActions, browser)
 
         if browser_fn is None:
             raise Exception(f"browser {browser} is not supported")
