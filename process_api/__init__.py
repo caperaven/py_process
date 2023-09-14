@@ -35,6 +35,9 @@ class ProcessAPI:
     async def run(self, step, ctx=None, process=None, item=None):
         return await self.process_runner.run_step(self, step, ctx, process, item)
 
+    async def run_from_file(self, api, filename, ctx=None, parameters=None):
+        return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
+
 
 process_api = ProcessAPI()
 call = process_api.call
