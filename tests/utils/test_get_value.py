@@ -15,10 +15,8 @@ async def test_get_value_context():
 
 @pytest.mark.asyncio
 async def test_get_value_process():
-    class Process:
-        parameters = {"firstName": "John"}
-
-    assert await get_value("$p{firstName}", None, Process()) == "John"
+    process = {"parameters": {"firstName": "John"}}
+    assert await get_value("$p{firstName}", None, process) == "John"
 
 
 @pytest.mark.asyncio
