@@ -79,7 +79,7 @@ async def load_json(file_path):
         print(f"An error occurred: {e}")
 
 
-class SchemaRunner:
+class SchemaRunnerManager:
     templates = {}
     schemas = {}
 

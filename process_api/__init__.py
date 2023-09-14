@@ -1,5 +1,5 @@
 from process_api.process_runner import ProcessRunner
-from process_api.schema_runner import SchemaRunner
+from process_api.schema_runner import SchemaRunnerManager
 from process_api.modules import register
 
 
@@ -19,7 +19,7 @@ class ProcessAPI:
 
     def __init__(self):
         self.process_runner = ProcessRunner()
-        self.schema_runner = SchemaRunner()
+        self.schema_runner = SchemaRunnerManager()
 
     # This method is used to add a module to the process api.
     # The module is a class that contains functions that can be called from the process steps.
