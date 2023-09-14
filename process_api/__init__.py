@@ -30,10 +30,10 @@ class ProcessAPI:
             "args": step_args
         }
 
-        return await self.process_runner.run_step(self, step, ctx, process, item)
+        return await self.run(step, ctx, process, item)
 
-    async def run(self, step, context, process, item):
-        return await self.process_runner.run_step(self, step, context, process, item)
+    async def run(self, step, ctx=None, process=None, item=None):
+        return await self.process_runner.run_step(self, step, ctx, process, item)
 
 
 process_api = ProcessAPI()

@@ -7,8 +7,8 @@ from selenium.webdriver.remote.webelement import WebElement
 async def get(driver, args):
     query = args.get("element")
     timeout = args.get("timeout", 10)
-    context = args.get("context", driver)
-    element = await get_element(context, query, timeout)
+    ctx = args.get("context", driver)
+    element = await get_element(ctx, query, timeout)
 
     if "attribute" in args:
         return element.get_attribute(args["attribute"])

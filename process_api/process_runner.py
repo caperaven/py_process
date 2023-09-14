@@ -26,8 +26,10 @@ class ProcessRunner:
             function = getattr(module, action)
             result = await function(api, step, ctx, process, item)
 
-            if "target" in step:
-                await set_value(step.get('target'), result, ctx, process, item)
+            args = step.get("args", None)
+
+            if args is not None and "target" in args:
+                await set_value(args.get('target'), result, ctx, process, item)
 
             if "next_step" in step:
                 next_step_name = step["next_step"]

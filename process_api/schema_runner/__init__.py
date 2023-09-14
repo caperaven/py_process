@@ -9,8 +9,6 @@ import json
 
 async def process_parameters(process, parameters, ctx=None):
     parameters_def = process.get("parameters_def")
-    del process["parameters_def"]
-
     schema_parameters = {}
 
     for parameter_name in parameters_def.keys():
@@ -51,6 +49,7 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None):
 
     if "parameters_def" in process:
         await process_parameters(process, parameters, ctx=None)
+        del process["parameters_def"]
 
     start_step = process["steps"]["start"]
     await api.run(start_step, ctx, process, None)
