@@ -85,6 +85,15 @@ class DataModule:
         api.add_module("data", DataModule)
 
     @staticmethod
+    async def perform(api, step, ctx=None, process=None, item=None):
+        action = step["action"]
+
+        fn = getattr(DataModule, action, None)
+
+        if fn is not None:
+            return await fn(api, step, ctx, process, item)
+
+    @staticmethod
     async def load(api, step, ctx=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), ctx, process, item)

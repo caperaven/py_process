@@ -1,5 +1,6 @@
 {
     "scripts": {
-        "run_server": "python -m http.server -b 127.0.0.1 8080"
+        "run_server": "python -m http.server -b 127.0.0.1 8080",
+        "api_server": "cd process_api & uvicorn process_api/web_api:app --reload --host"
     }
 }
