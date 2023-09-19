@@ -4,6 +4,7 @@ from process_api.modules.selenium.modules.condition_callbacks.style_property_cal
 from process_api.modules.selenium.modules.condition_callbacks.style_properties_callback import style_properties_callback
 from process_api.modules.selenium.modules.condition_callbacks.element_property_callback import element_property_callback
 from process_api.modules.selenium.modules.condition_callbacks.element_properties_callback import element_properties_callback
+from process_api.modules.selenium.modules.condition_callbacks.selected_callback import selected_callback
 
 
 
