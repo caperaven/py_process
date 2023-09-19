@@ -1,4 +1,4 @@
-def attribute_callback(element, args):
+def attributes_callback(element, args):
     def _predicate(driver):
         attributes = args["attributes"].keys()
 

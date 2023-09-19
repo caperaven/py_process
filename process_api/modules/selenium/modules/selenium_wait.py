@@ -2,7 +2,8 @@ import time
 from process_api.modules.selenium.automation.wait import wait
 from selenium.webdriver.support.ui import WebDriverWait
 
-from process_api.modules.selenium.modules.condition_callbacks.attribute_callback import attribute_callback
+from process_api.modules.selenium.modules.condition_callbacks import attribute_callback, attributes_callback, \
+    css_property_callback
 
 
 async def wait_for_element_details(api, step, callback, ctx=None, process=None, item=None):
@@ -46,7 +47,7 @@ class WaitModule:
 
     @staticmethod
     async def attributes(api, step, ctx=None, process=None, item=None):
-        await wait_for_element_details(api, step, attribute_callback, ctx, process, item)
+        await wait_for_element_details(api, step, attributes_callback, ctx, process, item)
 
     @staticmethod
     async def style_property(api, step, ctx=None, process=None, item=None):
