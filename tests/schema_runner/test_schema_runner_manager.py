@@ -4,30 +4,32 @@ from process_api.schema_runner import SchemaRunnerManager
 from process_api import process_api
 
 
+@pytest.mark.asyncio
 async def test_schema_runner_add_schema():
     runner = SchemaRunnerManager()
     await runner.add_schema({"id": "test"})
     assert "test" in runner.schemas
 
-    runner.remove_schema("test")
+    await runner.remove_schema("test")
     assert "test" not in runner.schemas
 
     await runner.add_schema({"id": "test"})
     await runner.clear_schemas()
-    assert "test" in runner.schemas
+    assert "test" not in runner.schemas
 
 
+@pytest.mark.asyncio
 async def test_schema_runner_add_template():
     runner = SchemaRunnerManager()
     await runner.add_template({"id": "test"})
     assert "test" in runner.templates
 
-    runner.remove_template("test")
+    await runner.remove_template("test")
     assert "test" not in runner.templates
 
     await runner.add_template({"id": "test"})
     await runner.clear_templates()
-    assert "test" in runner.templates
+    assert "test" not in runner.templates
 
 
 @pytest.mark.asyncio
