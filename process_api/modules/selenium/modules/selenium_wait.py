@@ -46,8 +46,7 @@ class WaitModule:
 
     @staticmethod
     async def attributes(api, step, ctx=None, process=None, item=None):
-
-        pass
+        await wait_for_element_details(api, step, attribute_callback, ctx, process, item)
 
     @staticmethod
     async def style_property(api, step, ctx=None, process=None, item=None):
