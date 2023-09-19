@@ -3,6 +3,7 @@ import json
 from process_api.modules.data import DataModule
 from fastapi import Body
 
+
 def register(app, process_api, logger):
     DataModule.register(process_api)
 
@@ -35,5 +36,3 @@ def register(app, process_api, logger):
                 "message": f"Data {name} not found",
                 "error": str(e),
             }
-
-

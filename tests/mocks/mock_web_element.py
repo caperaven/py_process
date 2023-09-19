@@ -7,6 +7,7 @@ class MockWebElement(WebElement):
         self._tag_name = tag_name
         self.attributes = {}
         self.styles = {}
+        self.properties = {}
 
     @property
     def tag_name(self):
@@ -23,3 +24,11 @@ class MockWebElement(WebElement):
 
     def value_of_css_property(self, name):
         return self.styles.get(name, None)
+
+    def set_property(self, name, value):
+        self.properties[name] = value
+
+    def get_property(self, name):
+        return self.properties.get(name, None)
+
+

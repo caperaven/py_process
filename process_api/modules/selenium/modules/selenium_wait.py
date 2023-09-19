@@ -3,7 +3,7 @@ from process_api.modules.selenium.automation.wait import wait
 from selenium.webdriver.support.ui import WebDriverWait
 
 from process_api.modules.selenium.modules.condition_callbacks import attribute_callback, attributes_callback, \
-    style_property_callback, style_properties_callback
+    style_property_callback, style_properties_callback, element_property_callback, element_properties_callback
 
 
 async def wait_for_element_details(api, step, callback, ctx=None, process=None, item=None):
@@ -33,7 +33,11 @@ class WaitModule:
 
     @staticmethod
     async def is_ready(api, step, ctx=None, process=None, item=None):
-        pass
+        args = step["args"]
+        args["attr"] = "data-ready"
+        args["value"] = "true"
+        step["args"] = args
+        await WaitModule.attribute(api, step, ctx, process, item)
 
     @staticmethod
     async def element(api, step, ctx=None, process=None, item=None):
@@ -59,7 +63,11 @@ class WaitModule:
 
     @staticmethod
     async def element_property(api, step, ctx=None, process=None, item=None):
-        pass
+        await wait_for_element_details(api, step, element_property_callback, ctx, process, item)
+
+    @staticmethod
+    async def element_properties(api, step, ctx=None, process=None, item=None):
+        await wait_for_element_details(api, step, element_properties_callback, ctx, process, item)
 
     @staticmethod
     async def text_content(api, step, ctx=None, process=None, item=None):
