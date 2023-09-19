@@ -9,6 +9,7 @@ class MockWebElement(WebElement):
         self._styles = {}
         self._properties = {}
         self._selected = False
+        self._children = []
 
     @property
     def tag_name(self):
@@ -37,5 +38,11 @@ class MockWebElement(WebElement):
 
     def set_selected(self, value):
         self._selected = value
+
+    def add_children(self, *children):
+        self._children.extend(children)
+
+    def find_elements(self, by_type, query):
+        return self._children
 
 
