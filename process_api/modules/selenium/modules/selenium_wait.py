@@ -5,6 +5,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from process_api.modules.selenium.modules.condition_callbacks.attribute_callback import attribute_callback
 
 
+async def wait_for_element_details(api, step, callback, ctx=None, process=None, item=None):
+    args = step["args"]
+    step_args = {
+        "element": args.get("query")
+    }
+
+    element = await api.call("selenium", "get", step_args, ctx, process, item)
+
+    timeout = args.get("timeout", 10)
+    selenium_driver = api.get_variable("driver")
+    WebDriverWait(selenium_driver, timeout).until(callback(element, args))
+
+
 class WaitModule:
 
     @staticmethod
@@ -29,20 +42,11 @@ class WaitModule:
 
     @staticmethod
     async def attribute(api, step, ctx=None, process=None, item=None):
-        args = step["args"]
-
-        step_args = {
-            "element": args.get("query")
-        }
-
-        element = await api.call("selenium", "get", step_args, ctx, process, item)
-
-        timeout = args.get("timeout", 10)
-        selenium_driver = api.get_variable("driver")
-        WebDriverWait(selenium_driver, timeout).until(attribute_callback(element, args))
+        await wait_for_element_details(api, step, attribute_callback, ctx, process, item)
 
     @staticmethod
     async def attributes(api, step, ctx=None, process=None, item=None):
+
         pass
 
     @staticmethod
