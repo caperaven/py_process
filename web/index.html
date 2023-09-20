@@ -19,11 +19,16 @@
     <p>Please select your favorite Web language:</p>
     <div id="radio-container">
         <input id="cbHTML" type="radio" id="html" name="fav_language" value="HTML" checked>
-        <label for="html">HTML</label><br>
+        <label for="cbHTML">HTML</label><br>
         <input id="cbCSS" type="radio" id="css" name="fav_language" value="CSS">
-        <label for="css">CSS</label><br>
+        <label for="cbCSS">CSS</label><br>
         <input id="cbJS" type="radio" id="javascript" name="fav_language" value="JavaScript">
-        <label for="javascript">JavaScript</label>
+        <label for="cbJS">JavaScript</label>
     </div>
+
+    <p>Web Components</p>
+    <container-component></container-component>
+
+    <script type="module" src="components/container-component/container-component.js"></script>
 </body>
 </html>
