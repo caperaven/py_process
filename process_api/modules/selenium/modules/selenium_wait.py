@@ -88,6 +88,7 @@ class WaitModule:
 
     @staticmethod
     async def element_count(api, step, ctx=None, process=None, item=None):
+        await wait_for_element_details(api, step, element_count_callback, ctx, process, item)
         pass
 
     @staticmethod

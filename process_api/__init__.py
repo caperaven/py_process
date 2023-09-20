@@ -31,7 +31,8 @@ class ProcessAPI:
         return self.variables[name]
 
     def delete_variable(self, name):
-        del self.variables[name]
+        if name in self.variables:
+            del self.variables[name]
 
     # This method is used to add a module to the process api.
     # The module is a class that contains functions that can be called from the process steps.

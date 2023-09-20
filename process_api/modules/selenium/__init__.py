@@ -14,12 +14,17 @@ class SeleniumModule:
         args = step["args"]
         browser = await get_value(args.get("browser"), ctx, process, item)
         options = await get_value(args.get("options"), ctx, process, item)
-        return await DriverActions.init(browser, options)
+        driver = await DriverActions.init(browser, options)
+
+        api.set_variable("driver", driver)
+
+        return driver
 
     @staticmethod
     async def close_driver(api, step, ctx=None, process=None, item=None):
         selenium_driver = api.get_variable("driver")
         await DriverActions.close(selenium_driver)
+        api.delete_variable("driver")
 
     @staticmethod
     async def goto(api, step, ctx=None, process=None, item=None):
@@ -73,3 +78,8 @@ class SeleniumModule:
             await wait(selenium_driver, {
                 "query": args["wait"]
             })
+
+    @staticmethod
+    async def enable_event(api, step, ctx=None, process=None, item=None):
+        selenium_driver = api.get_variable("driver")
+        await enable_event(selenium_driver, step["args"])
