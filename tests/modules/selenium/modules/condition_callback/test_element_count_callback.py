@@ -6,7 +6,8 @@ from process_api.modules.selenium.modules.condition_callbacks import element_cou
 @pytest.mark.asyncio
 async def test_element_count_callback_pass():
     element = MockWebElement(None, "test")
-    element.add_children(
+    driver = MockWebElement(None, "driver")
+    driver.add_children(
         MockWebElement(None, "child1"),
         MockWebElement(None, "child2")
     )
@@ -16,7 +17,7 @@ async def test_element_count_callback_pass():
     }
 
     predicate = element_count_callback(element, args)
-    assert predicate(None) is True
+    assert predicate(driver) is True
 
 
 @pytest.mark.asyncio
@@ -28,5 +29,5 @@ async def test_element_count_callback_fail():
     }
 
     predicate = element_count_callback(element, args)
-    assert predicate(None) is False
+    assert predicate(MockWebElement(None, "driver")) is False
 
