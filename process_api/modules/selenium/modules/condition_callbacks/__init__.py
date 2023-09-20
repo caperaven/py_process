@@ -7,6 +7,7 @@ from process_api.modules.selenium.modules.condition_callbacks.element_properties
 from process_api.modules.selenium.modules.condition_callbacks.selected_callback import selected_callback
 from process_api.modules.selenium.modules.condition_callbacks.child_count_callback import child_count_callback
 from process_api.modules.selenium.modules.condition_callbacks.element_count_callback import element_count_callback
+from process_api.modules.selenium.modules.condition_callbacks.window_count_callback import window_count_callback
 
 
 
