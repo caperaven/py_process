@@ -1,3 +1,14 @@
+<style>
+    :host {
+        display: block;
+        border: 1px solid red;
+    }
+
+    :host([data-ready="true"]) {
+        border: 1px solid green;
+    }
+</style>
+
 <section>
     <h2>Section Heading</h2>
 
@@ -17,4 +28,6 @@
             <input type="number" data-field="model.age" />
         </label>
     </div>
+
+    <button>Perform Task</button>
 </section>

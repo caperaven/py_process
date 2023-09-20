@@ -12,7 +12,7 @@ class ContainerComponent extends HTMLElement {
     }
 
     async load() {
-        this.dataset.loaded = "true";
+        this.dataset.ready = "true";
     }
 
     async disconnectedCallback() {
