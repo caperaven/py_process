@@ -4,7 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from process_api.modules.selenium.modules.condition_callbacks import attribute_callback, attributes_callback, \
     style_property_callback, style_properties_callback, element_property_callback, element_properties_callback,\
-    selected_callback, child_count_callback, window_count_callback, element_count_callback
+    selected_callback, child_count_callback, window_count_callback, element_count_callback, has_attribute_callback, \
+    has_class_callback
 
 
 async def wait_for_element_details(api, step, callback, ctx=None, process=None, item=None):
