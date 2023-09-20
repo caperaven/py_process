@@ -92,7 +92,10 @@ class WaitModule:
 
     @staticmethod
     async def window_count(api, step, ctx=None, process=None, item=None):
-        await wait_for_element_details(api, step, window_count_callback, ctx, process, item)
+        args = step["args"]
+        timeout = args.get("timeout", 10)
+        selenium_driver = api.get_variable("driver")
+        WebDriverWait(selenium_driver, timeout).until(window_count_callback(None, args))
 
     @staticmethod
     async def idle(api, step, ctx=None, process=None, item=None):
