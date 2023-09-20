@@ -100,7 +100,7 @@ class WaitModule:
     @staticmethod
     async def idle(api, step, ctx=None, process=None, item=None):
         step_args = {
-            "query": "body[idle]"
+            "element": "body[idle]"
         }
 
         element = await api.call("selenium", "get", step_args, ctx, process, item)
