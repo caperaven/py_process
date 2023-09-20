@@ -1,3 +1,6 @@
+from process_api.modules.selenium.modules.condition_callbacks.__eval import _eval
+
+
 def style_properties_callback(element, args):
     def _predicate(driver):
         properties = args["properties"].keys()
@@ -6,7 +9,7 @@ def style_properties_callback(element, args):
             exp_value = args["properties"][prop]
             value = element.value_of_css_property(prop)
 
-            if value != exp_value:
+            if not _eval(args, value, exp_value):
                 return False
 
         return True

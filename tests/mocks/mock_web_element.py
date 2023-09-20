@@ -45,4 +45,9 @@ class MockWebElement(WebElement):
     def find_elements(self, by_type, query):
         return self._children
 
+    def find_element(self, by_type, query):
+        if len(self._children) == 0:
+            return None
+
+        return self._children[0]
 

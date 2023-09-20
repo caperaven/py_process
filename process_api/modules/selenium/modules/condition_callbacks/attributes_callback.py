@@ -1,3 +1,6 @@
+from process_api.modules.selenium.modules.condition_callbacks.__eval import _eval
+
+
 def attributes_callback(element, args):
     def _predicate(driver):
         attributes = args["attributes"].keys()
@@ -6,7 +9,7 @@ def attributes_callback(element, args):
             exp_value = args["attributes"][attribute]
             value = element.get_attribute(attribute)
 
-            if value != exp_value:
+            if not _eval(args, value, exp_value):
                 return False
 
         return True

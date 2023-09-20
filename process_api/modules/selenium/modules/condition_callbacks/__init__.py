@@ -10,5 +10,6 @@ from process_api.modules.selenium.modules.condition_callbacks.element_count_call
 from process_api.modules.selenium.modules.condition_callbacks.window_count_callback import window_count_callback
 from process_api.modules.selenium.modules.condition_callbacks.has_attribute_callback import has_attribute_callback
 from process_api.modules.selenium.modules.condition_callbacks.has_class_callback import has_class_callback
+from process_api.modules.selenium.modules.condition_callbacks.element_callback import element_callback
 
 
