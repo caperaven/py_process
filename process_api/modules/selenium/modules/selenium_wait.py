@@ -89,30 +89,36 @@ class WaitModule:
     @staticmethod
     async def element_count(api, step, ctx=None, process=None, item=None):
         await wait_for_element_details(api, step, element_count_callback, ctx, process, item)
-        pass
 
     @staticmethod
     async def window_count(api, step, ctx=None, process=None, item=None):
         await wait_for_element_details(api, step, window_count_callback, ctx, process, item)
-        pass
 
     @staticmethod
     async def idle(api, step, ctx=None, process=None, item=None):
-        pass
+        step_args = {
+            "query": "body[idle]"
+        }
+
+        element = await api.call("selenium", "get", step_args, ctx, process, item)
 
     @staticmethod
     async def has_attribute(api, step, ctx=None, process=None, item=None):
-        pass
+        step["args"]["present"] = True
+        await wait_for_element_details(api, step, has_attribute_callback, ctx, process, item)
 
     @staticmethod
     async def has_not_attribute(api, step, ctx=None, process=None, item=None):
-        pass
+        step["args"]["present"] = False
+        await wait_for_element_details(api, step, has_attribute_callback, ctx, process, item)
 
     @staticmethod
     async def has_class(api, step, ctx=None, process=None, item=None):
-        pass
+        step["args"]["present"] = True
+        await wait_for_element_details(api, step, has_class_callback, ctx, process, item)
 
     @staticmethod
     async def has_not_class(api, step, ctx=None, process=None, item=None):
-        pass
+        step["args"]["present"] = False
+        await wait_for_element_details(api, step, has_class_callback, ctx, process, item)
 
