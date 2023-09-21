@@ -28,7 +28,6 @@ class PerformModule:
         args = step["args"].copy()
         args["action"] = "click"
         await api.call("selenium", "perform", args, ctx, process, item)
-        pass
 
     @staticmethod
     async def dbl_click(api, step, ctx=None, process=None, item=None):

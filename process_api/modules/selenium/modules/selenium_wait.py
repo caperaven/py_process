@@ -40,7 +40,8 @@ class WaitModule:
 
     @staticmethod
     async def element(api, step, ctx=None, process=None, item=None):
-        await wait_for_element_details(api, step, element_callback, ctx, process, item)
+        args = step["args"]
+        await api.call("selenium", "get", args, ctx, process, item)
 
     @staticmethod
     async def attribute(api, step, ctx=None, process=None, item=None):

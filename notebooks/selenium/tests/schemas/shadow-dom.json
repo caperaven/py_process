@@ -1,0 +1,35 @@
+{
+    "id": "shadow-dom",
+
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8080/web/",
+                    "wait": "h1"
+                },
+                "next_step": "click_on_button"
+            },
+
+            "click_on_button": {
+                "type": "perform",
+                "action": "click",
+                "args": {
+                    "query": "container-component[data-ready='true'] child-component[data-ready='true'] button"
+                },
+                "next_step": "wait_child-component_ready"
+            },
+
+            "wait_child-component_ready": {
+                "type": "wait",
+                "action": "element",
+                "args": {
+                    "query": "container-component[data-ready='true'] child-component[data-ready='true']",
+                    "timeout": 100
+                }
+            }
+        }
+    }
+}
