@@ -68,13 +68,11 @@ class AssertModule:
     @staticmethod
     async def value_eq(api, step, ctx=None, process=None, item=None):
         await WaitModule.text_value(api, step, ctx, process, item)
-        pass
 
     @staticmethod
     async def value_neq(api, step, ctx=None, process=None, item=None):
         step["args"]["operator"] = "neq"
         await WaitModule.text_value(api, step, ctx, process, item)
-        pass
 
     @staticmethod
     async def has_class(api, step, ctx=None, process=None, item=None):

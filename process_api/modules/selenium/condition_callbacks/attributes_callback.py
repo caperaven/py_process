@@ -1,4 +1,4 @@
-from process_api.modules.selenium.modules.condition_callbacks.__eval import _eval
+from process_api.modules.selenium.condition_callbacks.__eval import _eval
 
 
 def attributes_callback(element, args):
