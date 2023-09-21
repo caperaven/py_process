@@ -10,6 +10,8 @@ class MockWebElement(WebElement):
         self._properties = {}
         self._selected = False
         self._children = []
+        self.enabled = True
+        self.displayed = True
 
     @property
     def tag_name(self):
@@ -51,3 +53,8 @@ class MockWebElement(WebElement):
 
         return self._children[0]
 
+    def is_enabled(self):
+        return self.enabled
+
+    def is_displayed(self):
+        return self.displayed

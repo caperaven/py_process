@@ -20,10 +20,12 @@ def element_callback(element, args):
 def element_usable_callback(element):
     def _predicate(driver):
         if element is None:
-            return False
+            return None
 
         if element.is_enabled() and element.is_displayed():
             return element
+
+        return None
 
     return _predicate
 
