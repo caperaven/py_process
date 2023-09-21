@@ -18,7 +18,7 @@ class ChildComponent extends HTMLElement {
             delete this.dataset.loading;
             this.dataset.ready = "true";
             clearTimeout(timeout);
-        }, 2000);
+        }, 5000);
     }
 
     async disconnectedCallback() {
