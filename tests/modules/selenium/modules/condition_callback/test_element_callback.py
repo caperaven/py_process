@@ -16,7 +16,7 @@ async def test_element_callback_true_pass():
     }
 
     predicate = element_callback(None, args)
-    assert predicate(driver) is True
+    assert predicate(driver) is not False
 
 
 @pytest.mark.asyncio
@@ -58,4 +58,4 @@ async def test_element_callback_false_pass():
     }
 
     predicate = element_callback(None, args)
-    assert predicate(driver) is True
+    assert predicate(driver) is not False

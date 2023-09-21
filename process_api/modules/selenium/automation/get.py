@@ -1,11 +1,10 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
+from process_api.modules.selenium.condition_callbacks import element_callback, element_usable_callback, light_and_shadow_dom_callback
 
 
 async def get(driver, args):
-    query = args.get("element")
+    query = args.get("query", args.get("element", None))
     timeout = args.get("timeout", 10)
     ctx = args.get("context", driver)
     element = await get_element(ctx, query, timeout)
@@ -27,34 +26,27 @@ async def get_element(driver, query, timeout):
         return await get_element_on_path(driver, query, timeout)
     else:
         wait = WebDriverWait(driver, timeout, poll_frequency=0.1)
-        try:
-            element = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, query)))
-            return element
-        except Exception as e:
-            print(e)
+
+        element = wait.until(element_callback(None, {
+            "query": query,
+            "present": True
+        }))
+
+        return wait.until(element_usable_callback(element))
 
 
 async def get_element_on_path(driver, query, timeout):
     queries = query.split(" ")
-    context = driver
+    wait = WebDriverWait(driver, timeout, poll_frequency=0.1)
+    element = driver
+    shadow_root = None
 
     for query in queries:
-        use_shadow_root = query.endswith("::host")
-
-        if use_shadow_root:
-            query = query[:-6]
-
-        element = await get_element(context, query, timeout)
+        element = wait.until(light_and_shadow_dom_callback(element, shadow_root, query))
 
         if element is None:
             return None
 
-        context = element
+        shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
 
-        if use_shadow_root:
-            shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
-
-            if shadow_root is not None:
-                context = element.shadow_root
-
-    return context
+    return element
