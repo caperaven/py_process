@@ -14,16 +14,23 @@ class GoogleRecording:
         pass
 
     def to_json(self):
-        return {
+        next_step_name = "step_1"
+
+        result = {
             "id": self.recording_json["title"],
             "main": {
-                "steps": {
-                    "start": {
-
-                    }
-                }
+                "steps": {}
             }
         }
+
+        step = result["main"]["steps"]["start"] = self.steps[0]
+
+        for i in range(1, len(self.steps)):
+            step["next_step"] = next_step_name
+            step = result["main"]["steps"][next_step_name] = self.steps[i]
+            next_step_name = f"step_{i + 1}"
+
+        return result
 
 
 selenium_lookup_table = {
@@ -64,6 +71,7 @@ def inflate_step(selenium_step, step):
                 selenium_step["args"][arg] = step[property_name]
 
     return selenium_step
+
 
 def parse_selectors(step):
     return " ".join(step["selectors"][0])

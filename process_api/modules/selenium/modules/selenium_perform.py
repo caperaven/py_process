@@ -1,3 +1,6 @@
+from selenium.webdriver import Keys
+import time
+
 
 class PerformModule:
 
@@ -67,7 +70,15 @@ class PerformModule:
 
     @staticmethod
     async def type_text(api, step, ctx=None, process=None, item=None):
-        pass
+        args = step["args"].copy()
+        value = args["value"]
+        element = await api.call("selenium", "get", args, ctx, process, item)
+
+        element.clear()
+        element.send_keys(value)
+        time.sleep(0.1)
+        element.send_keys(Keys.ENTER)
+        time.sleep(0.25)
 
     @staticmethod
     async def hover_over_element(api, step, ctx=None, process=None, item=None):
