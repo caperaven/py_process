@@ -35,12 +35,15 @@ def parse_selectors(index, steps):
             "key": step["key"]
         }, index + 2)
 
+    return step, index + 1
+
 
 def create_change_step(index, steps):
     step = steps[index]
     new_index = find_last_index_of_selector(index, steps, step["selectors"][0])
 
     step = steps[new_index]
+
     return ({
         "type": "change",
         "selectors": [step["selectors"][0]],
@@ -58,5 +61,9 @@ def find_last_index_of_selector(index, steps, selector):
     # if the next step has different selectors than we expect, we have reached the end of the change
     if "selectors" in next_step and next_step["selectors"][0] != selector:
         return index
+
+    if "key" in next_step:
+        if next_step["key"] == "Tab" or next_step["key"] == "Enter":
+            return index
 
     return find_last_index_of_selector(index + 1, steps, selector)
