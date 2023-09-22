@@ -4,8 +4,11 @@ class GoogleRecording:
         self.steps = []
 
         for step in recording_json["steps"]:
-            selenium_step = selenium_lookup_table[step["type"]]
-            self.steps.append(inflate_step(selenium_step, step))
+            key = step["type"]
+            if key in selenium_lookup_table:
+                selenium_step = selenium_lookup_table[key]
+                if selenium_step is not None:
+                    self.steps.append(inflate_step(selenium_step, step))
 
     def clean_recording(self, recording_json):
         pass

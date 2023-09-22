@@ -74,6 +74,12 @@ class ProcessAPI:
         except Exception:
             raise traceback.print_exc()
 
+    async def run_schema(self, schema, ctx=None, parameters=None):
+        try:
+            return await self.schema_runner.run_schema(self, schema, ctx, parameters)
+        except Exception:
+            raise traceback.print_exc()
+
 
 process_api = ProcessAPI()
 call = process_api.call

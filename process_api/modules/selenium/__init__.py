@@ -1,6 +1,8 @@
 from process_api.modules.selenium.automation import DriverActions, goto, get, set, wait, perform
 from process_api.utils.get_value import get_value
 from process_api.modules.selenium.modules import register as register_modules
+from process_api.modules.selenium.conversions.clean_google_recording import clean_google_recording
+from process_api.modules.selenium.conversions.from_google_recording import GoogleRecording
 
 
 class SeleniumModule:
@@ -80,6 +82,11 @@ class SeleniumModule:
             })
 
     @staticmethod
-    async def enable_event(api, step, ctx=None, process=None, item=None):
-        selenium_driver = api.get_variable("driver")
-        await enable_event(selenium_driver, step["args"])
+    async def run_google_recording(api, step, ctx=None, process=None, item=None):
+        args = step["args"]
+        recording_json = await get_value(args["recording"], ctx, process, item)
+        recording_json = clean_google_recording(recording_json)
+        converter = GoogleRecording(recording_json)
+        recording_json = converter.to_json()
+        await api.run_schema(recording_json, ctx, process)
+
