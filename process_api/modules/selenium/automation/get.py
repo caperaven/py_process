@@ -42,6 +42,9 @@ async def get_element_on_path(driver, query, timeout):
     shadow_root = None
 
     for query in queries:
+        if query == ">":
+            continue
+
         element = wait.until(light_and_shadow_dom_callback(element, shadow_root, query))
 
         if element is None:
