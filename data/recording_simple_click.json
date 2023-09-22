@@ -1,0 +1,55 @@
+{
+    "title": "Recording 9/21/2023 at 4:59:01 PM",
+    "selectorAttribute": "id",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 918,
+            "height": 1315,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "http://127.0.0.1:8080/web/",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "http://127.0.0.1:8080/web/",
+                    "title": "Document"
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "container-component",
+                    "child-component",
+                    "button"
+                ],
+                [
+                    "aria/Perform Task"
+                ]
+            ],
+            "offsetY": 14.3125,
+            "offsetX": 57
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                [
+                    "container-component",
+                    "child-component"
+                ]
+            ],
+            "attributes": {
+                "data-ready": "true"
+            }
+        }
+    ]
+}
