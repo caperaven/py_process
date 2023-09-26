@@ -49,7 +49,6 @@ class PerformModule:
         args = step["args"].copy()
         args["action"] = "context_click"
         await api.call("selenium", "perform", args, ctx, process, item)
-        pass
 
     @staticmethod
     async def click_sequence(api, step, ctx=None, process=None, item=None):

@@ -1,3 +1,5 @@
+import copy
+
 class GoogleRecording:
     def __init__(self, recording_json):
         self.recording_json = recording_json
@@ -8,7 +10,8 @@ class GoogleRecording:
             if key in selenium_lookup_table:
                 selenium_step = selenium_lookup_table[key]
                 if selenium_step is not None:
-                    self.steps.append(inflate_step(selenium_step, step))
+                    copy_step = copy.deepcopy(selenium_step)
+                    self.steps.append(inflate_step(copy_step, step))
 
     def clean_recording(self, recording_json):
         pass
@@ -27,7 +30,7 @@ class GoogleRecording:
 
         for i in range(1, len(self.steps)):
             step["next_step"] = next_step_name
-            step = result["main"]["steps"][next_step_name] = self.steps[i].copy()
+            step = result["main"]["steps"][next_step_name] = copy.deepcopy(self.steps[i])
             next_step_name = f"step_{i + 1}"
 
         return result

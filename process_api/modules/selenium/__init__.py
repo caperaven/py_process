@@ -85,8 +85,8 @@ class SeleniumModule:
     async def run_google_recording(api, step, ctx=None, process=None, item=None):
         args = step["args"]
         recording_json = await get_value(args["recording"], ctx, process, item)
-        recording_json = clean_google_recording(recording_json)
-        converter = GoogleRecording(recording_json)
-        recording_json = converter.to_json()
-        await api.run_schema(recording_json, ctx, process)
+        clean_recording_json = clean_google_recording(recording_json)
+        converter = GoogleRecording(clean_recording_json)
+        schema_json = converter.to_json()
+        await api.run_schema(schema_json, ctx, process)
 
