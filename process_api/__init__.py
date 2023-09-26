@@ -2,7 +2,7 @@ from process_api.process_runner import ProcessRunner
 from process_api.schema_runner import SchemaRunnerManager
 from process_api.modules import register
 from process_api.process_logger import ProcessLogger
-
+import traceback
 
 # This class is a wrapper around the ProcessRunner class.
 # It is used to make the process_runner module more accessible.
@@ -65,21 +65,24 @@ class ProcessAPI:
     async def run(self, step, ctx=None, process=None, item=None):
         try:
             return await self.process_runner.run_step(self, step, ctx, process, item)
-        except Exception:
-            self.logger.error("An error occured:", exec_info=True)
+        except Exception as e:
+            self.logger.critical(str(e))
+            self.logger.error(traceback.format_exc())
 
     # This method is used to load a process schema definition from file and execute the schema as a whole.
     async def run_from_file(self, api, filename, ctx=None, parameters=None):
         try:
             return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
-        except Exception:
-            self.logger.error("An error occured:", exec_info=True)
+        except Exception as e:
+            self.logger.critical(str(e))
+            self.logger.error(traceback.format_exc())
 
     async def run_schema(self, schema, ctx=None, parameters=None):
         try:
             return await self.schema_runner.run_schema(self, schema, ctx, parameters)
-        except Exception:
-            self.logger.error("An error occured:", exec_info=True)
+        except Exception as e:
+            self.logger.critical(str(e))
+            self.logger.error(traceback.format_exc())
 
 
 process_api = ProcessAPI()

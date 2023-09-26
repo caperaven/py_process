@@ -1,5 +1,7 @@
 import time
 from selenium.webdriver import Keys, ActionChains
+from selenium.webdriver.remote.webelement import WebElement
+
 from process_api.modules.selenium.automation.get import get_element
 
 
@@ -26,11 +28,13 @@ class Actions:
 
     @staticmethod
     async def double_click(driver, element, chain, args=None):
-        element.double_click()
+        action = chain.double_click(element)
+        action.perform()
 
     @staticmethod
     async def context_click(driver, element, chain, args=None):
-        element.context_click()
+        action = chain.context_click(element)
+        action.perform()
 
     @staticmethod
     async def clear(driver, element, chain, args=None):

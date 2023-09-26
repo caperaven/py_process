@@ -58,7 +58,7 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None, item
 
 
 async def run_schema(api, schema, ctx=None, parameters=None):
-    api.logger.info(f'run schema: "{schema["id"]}"')
+    api.logger.info(f'run schema: "{schema.get("id", "unknown")}"')
 
     sequence = schema.get('sequence', None)
     required_modules = schema.get('required_modules', None)

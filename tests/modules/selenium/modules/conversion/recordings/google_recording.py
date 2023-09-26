@@ -256,6 +256,20 @@ recording_click_sequence = {
             "offsetX": 125
         },
         {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "container-component",
+                    "child-component",
+                    "label:nth-of-type(3) > input"
+                ]
+            ],
+            "button": "secondary",
+            "offsetY": 16.3125,
+            "offsetX": 125
+        },
+        {
             "type": "doubleClick",
             "target": "main",
             "selectors": [

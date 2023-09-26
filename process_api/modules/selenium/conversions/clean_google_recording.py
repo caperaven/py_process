@@ -27,6 +27,12 @@ def parse_selectors(index, steps):
     if step["type"] == "change":
         return create_change_step(index, steps)
 
+    if step["type"] == "click" and step.get("button") == "secondary":
+        return ({
+            "type": "contextClick",
+            "selectors": step["selectors"]
+        }, index + 1)
+
     if index + 1 == len(steps):
         return step, index + 1
 
@@ -67,7 +73,7 @@ def create_click_sequence_step(index, steps, new_type, action_type):
     }
 
     last_index = len(steps)
-    while index < last_index and steps[index]["type"] == action_type:
+    while index < last_index and steps[index]["type"] == action_type and steps[index].get("button") is None:
         step = steps[index]
         result["sequence"].append(step["selectors"][0])
         index += 1

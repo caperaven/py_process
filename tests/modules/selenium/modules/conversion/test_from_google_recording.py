@@ -31,6 +31,66 @@ async def test_click_inflation():
 
 
 @pytest.mark.asyncio
+async def test_dbl_click_inflation():
+    new_step = selenium_lookup_table["doubleClick"]
+    step = inflate_step(new_step, {
+        "type": "dbl_click",
+        "selectors": [
+            ["container-component", "child-component", "button"]
+        ]
+    })
+
+    assert step["type"] == "perform"
+    assert step["action"] == "dbl_click"
+    assert step["args"]["query"] == "container-component child-component button"
+
+
+@pytest.mark.asyncio
+async def test_context_click_inflation():
+    new_step = selenium_lookup_table["contextClick"]
+    step = inflate_step(new_step, {
+        "type": "context_click",
+        "selectors": [
+            ["container-component", "child-component", "button"]
+        ]
+    })
+
+    assert step["type"] == "perform"
+    assert step["action"] == "context_click"
+    assert step["args"]["query"] == "container-component child-component button"
+
+
+@pytest.mark.asyncio
+async def test_click_sequence_inflation():
+    new_step = selenium_lookup_table["clickSequence"]
+    step = inflate_step(new_step, {
+        "type": "click_sequence",
+        "sequence": [
+            ["container-component", "child-component", "button"]
+        ]
+    })
+
+    assert step["type"] == "perform"
+    assert step["action"] == "click_sequence"
+    assert step["args"]["sequence"] == [['container-component', 'child-component', 'button']]
+
+
+@pytest.mark.asyncio
+async def test_dbl_click_sequence_inflation():
+    new_step = selenium_lookup_table["doubleClickSequence"]
+    step = inflate_step(new_step, {
+        "type": "dbl_click_sequence",
+        "sequence": [
+            ["container-component", "child-component", "button"]
+        ]
+    })
+
+    assert step["type"] == "perform"
+    assert step["action"] == "dbl_click_sequence"
+    assert step["args"]["sequence"] == [['container-component', 'child-component', 'button']]
+
+
+@pytest.mark.asyncio
 async def test_type_text_inflation():
     new_step = selenium_lookup_table["change"]
     step = inflate_step(new_step, {

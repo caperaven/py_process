@@ -62,11 +62,18 @@ selenium_lookup_table = {
             "sequence": "${sequence}"
         }
     },
-    "dblClickSequence": {
+    "doubleClickSequence": {
         "type": "perform",
         "action": "dbl_click_sequence",
         "args": {
             "sequence": "${sequence}"
+        }
+    },
+    "contextClick": {
+        "type": "perform",
+        "action": "context_click",
+        "args": {
+            "query": "${selectors}"
         }
     },
     "change": {
