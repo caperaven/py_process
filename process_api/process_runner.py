@@ -33,6 +33,7 @@ class ProcessRunner:
 
             if "next_step" in step:
                 next_step_name = step["next_step"]
+                api.logger.info(f'run step: "{next_step_name}"')
                 next_step = process["steps"][next_step_name]
                 return await self.run_step(api, next_step, ctx, process, item)
 

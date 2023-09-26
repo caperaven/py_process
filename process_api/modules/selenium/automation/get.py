@@ -22,6 +22,9 @@ async def get_element(driver, query, timeout):
     if isinstance(query, WebElement):
         return query
 
+    if isinstance(query, list):
+        query = " ".join(query)
+
     if ' ' in query:
         return await get_element_on_path(driver, query, timeout)
     else:

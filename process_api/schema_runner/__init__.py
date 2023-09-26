@@ -53,10 +53,13 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None, item
         del process["parameters_def"]
 
     start_step = process["steps"]["start"]
+    api.logger.info('run step: "start"')
     return await api.run(start_step, ctx, process, item)
 
 
 async def run_schema(api, schema, ctx=None, parameters=None):
+    api.logger.info(f'run schema: "{schema["id"]}"')
+
     sequence = schema.get('sequence', None)
     required_modules = schema.get('required_modules', None)
 
@@ -67,11 +70,13 @@ async def run_schema(api, schema, ctx=None, parameters=None):
     if sequence is not None:
         result = None
         for process in sequence:
+            api.logger.info(f'run process: "${process}"')
             result = await run_process(api, schema, process, ctx, parameters)
 
         return result
 
     elif "main" in schema:
+        api.logger.info(f'run process: "main"')
         return await run_process(api, schema, "main", ctx, parameters)
 
 
