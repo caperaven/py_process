@@ -27,6 +27,9 @@ def parse_selectors(index, steps):
     if step["type"] == "change":
         return create_change_step(index, steps)
 
+    if index + 1 == len(steps):
+        return step, index + 1
+
     next_step = steps[index + 1]
 
     if step["type"] == "keyDown" and next_step["type"] == "keyUp":
@@ -34,6 +37,9 @@ def parse_selectors(index, steps):
             "type": "keyPress",
             "key": step["key"]
         }, index + 2)
+
+    if step["type"] == "click" and next_step["type"] == "click":
+        return create_click_sequence_step(index, steps, "clickSequence", "click")
 
     return step, index + 1
 
@@ -49,6 +55,21 @@ def create_change_step(index, steps):
         "selectors": [step["selectors"][0]],
         "value": step["value"]
     }, new_index + 1)
+
+
+def create_click_sequence_step(index, steps, new_type, action_type):
+    result = {
+        "type": new_type,
+        "sequence": []
+    }
+
+    last_index = len(steps)
+    while index < last_index and steps[index]["type"] == action_type:
+        step = steps[index]
+        result["sequence"].append(step["selectors"][0])
+        index += 1
+
+    return result, index
 
 
 def find_last_index_of_selector(index, steps, selector):

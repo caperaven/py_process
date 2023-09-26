@@ -1,7 +1,7 @@
 import pytest
 from process_api.modules.selenium.conversions.clean_google_recording import clean_google_recording
 from tests.modules.selenium.modules.conversion.recordings.google_recording import recording_key_press, recording_change, \
-    recording_large
+    recording_large, recording_click_sequence
 
 
 @pytest.mark.asyncio
@@ -30,15 +30,16 @@ async def test_change_large():
     assert result["steps"][1]["type"] == "navigate"
     assert result["steps"][1]["url"] == "http://127.0.0.1:8080/web/"
 
-    assert result["steps"][2]["type"] == "click"
-    assert result["steps"][2]["selectors"] == [["[id='cbCSS']"]]
+    assert result["steps"][2]["type"] == "clickSequence"
+    assert result["steps"][2]["sequence"][0] == ["[id='cbCSS']"]
+    assert result["steps"][2]["sequence"][1] == ['container-component', 'child-component', 'label:nth-of-type(1) > input']
 
-    assert result["steps"][3]["type"] == "click"
+    assert result["steps"][3]["type"] == "change"
     assert result["steps"][3]["selectors"] == [['container-component', 'child-component', 'label:nth-of-type(1) > input']]
+    assert result["steps"][3]["value"] == "Hello World"
 
-    assert result["steps"][4]["type"] == "change"
-    assert result["steps"][4]["selectors"] == [['container-component', 'child-component', 'label:nth-of-type(1) > input']]
-    assert result["steps"][4]["value"] == "Hello World"
+    assert result["steps"][4]["type"] == "keyPress"
+    assert result["steps"][4]["key"] == "Tab"
 
     assert result["steps"][5]["type"] == "keyPress"
     assert result["steps"][5]["key"] == "Tab"
@@ -47,7 +48,15 @@ async def test_change_large():
     assert result["steps"][6]["key"] == "Tab"
 
     assert result["steps"][7]["type"] == "keyPress"
-    assert result["steps"][7]["key"] == "Tab"
+    assert result["steps"][7]["key"] == "Enter"
 
-    assert result["steps"][8]["type"] == "keyPress"
-    assert result["steps"][8]["key"] == "Enter"
+
+@pytest.mark.asyncio
+async def test_change_click_sequence():
+    result = clean_google_recording(recording_click_sequence)
+    assert result["steps"][0]["type"] == "clickSequence"
+    assert result["steps"][0]["sequence"][0] == [ "container-component", "child-component", "label:nth-of-type(1) > input" ]
+    assert result["steps"][0]["sequence"][1] == [ "container-component", "child-component", "label:nth-of-type(2) > input" ]
+    assert result["steps"][0]["sequence"][2] == [ "container-component", "child-component", "label:nth-of-type(3) > input" ]
+    assert len(result["steps"][0]["sequence"]) == 3
+

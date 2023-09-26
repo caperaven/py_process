@@ -34,15 +34,28 @@ class PerformModule:
 
     @staticmethod
     async def dbl_click(api, step, ctx=None, process=None, item=None):
-        pass
+        args = step["args"].copy()
+        args["action"] = "double_click"
+        await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod
     async def context_click(api, step, ctx=None, process=None, item=None):
+        args = step["args"].copy()
+        args["action"] = "context_click"
+        await api.call("selenium", "perform", args, ctx, process, item)
         pass
 
     @staticmethod
     async def click_sequence(api, step, ctx=None, process=None, item=None):
-        pass
+        args = step["args"].copy()
+        args["action"] = "click_sequence"
+
+        sequence = args["sequence"]
+        for query in sequence:
+            args = step["args"].copy()
+            args["query"] = query
+            args["action"] = "click"
+            await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod
     async def press_key(api, step, ctx=None, process=None, item=None):
