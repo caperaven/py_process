@@ -254,6 +254,45 @@ recording_click_sequence = {
             ],
             "offsetY": 16.3125,
             "offsetX": 125
+        },
+        {
+            "type": "doubleClick",
+            "target": "main",
+            "selectors": [
+                [
+                    "container-component",
+                    "child-component",
+                    "label:nth-of-type(1) > input"
+                ]
+            ],
+            "offsetY": 14.3125,
+            "offsetX": 47
+        },
+        {
+            "type": "doubleClick",
+            "target": "main",
+            "selectors": [
+                [
+                    "container-component",
+                    "child-component",
+                    "label:nth-of-type(2) > input"
+                ]
+            ],
+            "offsetY": 6.3125,
+            "offsetX": 57
+        },
+        {
+            "type": "doubleClick",
+            "target": "main",
+            "selectors": [
+                [
+                    "container-component",
+                    "child-component",
+                    "label:nth-of-type(3) > input"
+                ]
+            ],
+            "offsetY": 5.3125,
+            "offsetX": 64
         }
     ]
 }

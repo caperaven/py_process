@@ -41,6 +41,9 @@ def parse_selectors(index, steps):
     if step["type"] == "click" and next_step["type"] == "click":
         return create_click_sequence_step(index, steps, "clickSequence", "click")
 
+    if step["type"] == "doubleClick" and next_step["type"] == "doubleClick":
+        return create_click_sequence_step(index, steps, "doubleClickSequence", "doubleClick")
+
     return step, index + 1
 
 

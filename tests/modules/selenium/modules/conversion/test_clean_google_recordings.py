@@ -60,3 +60,8 @@ async def test_change_click_sequence():
     assert result["steps"][0]["sequence"][2] == [ "container-component", "child-component", "label:nth-of-type(3) > input" ]
     assert len(result["steps"][0]["sequence"]) == 3
 
+    assert result["steps"][1]["type"] == "doubleClickSequence"
+    assert result["steps"][1]["sequence"][0] == [ "container-component", "child-component", "label:nth-of-type(1) > input" ]
+    assert result["steps"][1]["sequence"][1] == [ "container-component", "child-component", "label:nth-of-type(2) > input" ]
+    assert result["steps"][1]["sequence"][2] == [ "container-component", "child-component", "label:nth-of-type(3) > input" ]
+    assert len(result["steps"][1]["sequence"]) == 3
