@@ -67,7 +67,6 @@ class ProcessAPI:
             return await self.process_runner.run_step(self, step, ctx, process, item)
         except Exception:
             self.logger.error("An error occured:", exec_info=True)
-            self.logger.print()
 
     # This method is used to load a process schema definition from file and execute the schema as a whole.
     async def run_from_file(self, api, filename, ctx=None, parameters=None):
@@ -75,14 +74,12 @@ class ProcessAPI:
             return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
         except Exception:
             self.logger.error("An error occured:", exec_info=True)
-            self.logger.print()
 
     async def run_schema(self, schema, ctx=None, parameters=None):
         try:
             return await self.schema_runner.run_schema(self, schema, ctx, parameters)
         except Exception:
             self.logger.error("An error occured:", exec_info=True)
-            self.logger.print()
 
 
 process_api = ProcessAPI()
