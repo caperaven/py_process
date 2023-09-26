@@ -46,7 +46,11 @@ class PerformModule:
 
     @staticmethod
     async def press_key(api, step, ctx=None, process=None, item=None):
-        pass
+        args = step["args"].copy()
+        element = await api.call("selenium", "get", args, ctx, process, item)
+        key_value = args["key"].upper()
+        key = getattr(Keys, key_value)
+        element.send_keys(key)
 
     @staticmethod
     async def print_screen(api, step, ctx=None, process=None, item=None):

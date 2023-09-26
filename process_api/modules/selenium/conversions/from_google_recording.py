@@ -27,7 +27,7 @@ class GoogleRecording:
 
         for i in range(1, len(self.steps)):
             step["next_step"] = next_step_name
-            step = result["main"]["steps"][next_step_name] = self.steps[i]
+            step = result["main"]["steps"][next_step_name] = self.steps[i].copy()
             next_step_name = f"step_{i + 1}"
 
         return result
@@ -55,6 +55,14 @@ selenium_lookup_table = {
             "query": "${selectors}",
             "value": "${value}"
         }
+    },
+    "keyPress": {
+        "type": "perform",
+        "action": "press_key",
+        "args": {
+            "query": "${selectors}",
+            "key": "${key}"
+        }
     }
 }
 
@@ -74,4 +82,7 @@ def inflate_step(selenium_step, step):
 
 
 def parse_selectors(step):
+    if "selectors" not in step:
+        return "body"
+
     return " ".join(step["selectors"][0])
