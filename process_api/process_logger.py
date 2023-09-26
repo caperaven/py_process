@@ -32,7 +32,7 @@ class ProcessLogger:
         log_content = self.log_buffer.getvalue()
 
         try:
-            with open(file_name, 'a') as file:
+            with open(file_name, 'w') as file:
                 file.write(log_content)
             print(f"Log content saved to {file_name}")
         except Exception as e:
