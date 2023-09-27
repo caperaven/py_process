@@ -109,7 +109,11 @@ class PerformModule:
 
     @staticmethod
     async def switch_to_default(api, step, ctx=None, process=None, item=None):
-        args = copy.deepcopy(step["args"])
+        if "args" in step:
+            args = copy.deepcopy(step["args"])
+        else:
+            args = {}
+
         args["action"] = "switch_to_default"
         await api.call("selenium", "perform", args, ctx, process, item)
 

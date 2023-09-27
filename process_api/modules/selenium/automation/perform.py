@@ -22,7 +22,8 @@ async def perform(driver, args):
     chain = ActionChains(driver)
     count = args.get("count", 1)
 
-    await Actions.scroll_into_view(driver, element, chain, args)
+    if element is not None:
+        await Actions.scroll_into_view(driver, element, chain, args)
 
     for i in range(count):
         try:
@@ -135,26 +136,14 @@ class Actions:
     async def switch_to_frame(driver, element, chain, args):
         index = args.get("index", None)
 
+        window_handles = driver.window_handles
         if index is not None:
-            return driver.switch_to.frame(index)
-
-        name = args.get("name", None)
-        if name is not None:
-            return driver.switch_to.frame(name)
-
-        frame_id = args.get("frame_id", None)
-        if id is not None:
-            frame_element = driver.find_element(By.ID, frame_id)
-            return driver.switch_to.frame(frame_element)
+            return driver.switch_to.window(window_handles[1])
 
     @staticmethod
     async def switch_to_default(driver, element, chain, args):
-        try:
-            driver.switch_to.default_content()
-        except StaleElementReferenceException:
-            time.sleep(0.25)
-            await Actions.switch_to_default(driver, element, chain, args)
-            pass
+        window_handles = driver.window_handles
+        driver.switch_to.window(window_handles[0])
 
     @staticmethod
     async def switch_to_tab(driver, element, chain, args):

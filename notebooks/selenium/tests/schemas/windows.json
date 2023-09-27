@@ -54,7 +54,13 @@
                 "action": "window_count",
                 "args": {
                     "count": 1
-                }
+                },
+                "next_step": "return_to_default"
+            },
+
+            "return_to_default": {
+                "type": "perform",
+                "action": "switch_to_default"
             }
         }
     }
