@@ -5,6 +5,7 @@ import io
 class ProcessLogger:
     def __init__(self):
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
         self.logger = logging.getLogger("process_api")
         self.log_buffer = io.StringIO()
 
@@ -18,6 +19,18 @@ class ProcessLogger:
     def __del__(self):
         self.stream_handler.close()
         self.log_buffer.close()
+
+    def set_level(self, level):
+        if level == "debug":
+            logging.getLogger().setLevel(logging.DEBUG)
+        elif level == "info":
+            logging.getLogger().setLevel(logging.INFO)
+        elif level == "warning":
+            logging.getLogger().setLevel(logging.WARNING)
+        elif level == "error":
+            logging.getLogger().setLevel(logging.ERROR)
+        elif level == "critical":
+            logging.getLogger().setLevel(logging.CRITICAL)
 
     def clear_log(self):
         # Reset the content of the log buffer
