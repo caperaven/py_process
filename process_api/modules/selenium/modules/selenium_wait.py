@@ -1,5 +1,6 @@
 import time
 from selenium.webdriver.support.ui import WebDriverWait
+import copy
 
 from process_api.modules.selenium.condition_callbacks import attribute_callback, attributes_callback, \
     style_property_callback, style_properties_callback, element_property_callback, element_properties_callback,\
@@ -8,7 +9,7 @@ from process_api.modules.selenium.condition_callbacks import attribute_callback,
 
 
 async def wait_for_element_details(api, step, callback, ctx=None, process=None, item=None):
-    args = step["args"]
+    args = copy.deepcopy(step["args"])
     step_args = {
         "element": args.get("query")
     }
@@ -28,19 +29,20 @@ class WaitModule:
 
     @staticmethod
     async def time(api, step, ctx=None, process=None, item=None):
-        args = step["args"]
+        args = copy.deepcopy(step["args"])
         timeout = args.get("timeout", 1)
         time.sleep(timeout)
 
     @staticmethod
     async def is_ready(api, step, ctx=None, process=None, item=None):
-        step["args"]["attr"] = "data-ready"
-        step["args"]["value"] = "true"
+        args = copy.deepcopy(step["args"])
+        args["attr"] = "data-ready"
+        args["value"] = "true"
         await WaitModule.attribute(api, step, ctx, process, item)
 
     @staticmethod
     async def element(api, step, ctx=None, process=None, item=None):
-        args = step["args"]
+        args = copy.deepcopy(step["args"])
         await api.call("selenium", "get", args, ctx, process, item)
 
     @staticmethod
@@ -91,7 +93,7 @@ class WaitModule:
 
     @staticmethod
     async def window_count(api, step, ctx=None, process=None, item=None):
-        args = step["args"]
+        args = copy.deepcopy(step["args"])
         timeout = args.get("timeout", 10)
         selenium_driver = api.get_variable("driver")
         WebDriverWait(selenium_driver, timeout).until(window_count_callback(None, args))

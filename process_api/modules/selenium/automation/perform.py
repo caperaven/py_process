@@ -1,6 +1,8 @@
 import time
+
+from selenium.common import StaleElementReferenceException
 from selenium.webdriver import Keys, ActionChains
-from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.by import By
 
 from process_api.modules.selenium.automation.get import get_element
 
@@ -8,8 +10,14 @@ from process_api.modules.selenium.automation.get import get_element
 async def perform(driver, args):
     timeout = args.get("timeout", 10)
     context = args.get("context", driver)
-    query = args.get("query")
-    element = await get_element(context, query, timeout)
+    query = args.get("query", None)
+
+    # not all actions require an element
+    if query is not None:
+        element = await get_element(context, query, timeout)
+    else:
+        element = None
+
     action = args["action"]
     chain = ActionChains(driver)
     count = args.get("count", 1)
@@ -17,8 +25,12 @@ async def perform(driver, args):
     await Actions.scroll_into_view(driver, element, chain, args)
 
     for i in range(count):
-        await Actions.__dict__[action](driver, element, chain, args)
-        time.sleep(0.1)
+        try:
+            await Actions.__dict__[action](driver, element, chain, args)
+        except StaleElementReferenceException:
+            time.sleep(1)
+            await Actions.__dict__[action](driver, element, chain, args)
+            pass
 
 
 class Actions:
@@ -112,3 +124,39 @@ class Actions:
     async def send_keys(driver, element, chain, args):
         keys = args["keys"]
         element.send_keys(keys)
+
+    @staticmethod
+    async def hover_over_element(driver, element, chain, args):
+        action = ActionChains(driver)
+        action.move_to_element(element).perform()
+        pass
+
+    @staticmethod
+    async def switch_to_frame(driver, element, chain, args):
+        index = args.get("index", None)
+
+        if index is not None:
+            return driver.switch_to.frame(index)
+
+        name = args.get("name", None)
+        if name is not None:
+            return driver.switch_to.frame(name)
+
+        frame_id = args.get("frame_id", None)
+        if id is not None:
+            frame_element = driver.find_element(By.ID, frame_id)
+            return driver.switch_to.frame(frame_element)
+
+    @staticmethod
+    async def switch_to_default(driver, element, chain, args):
+        try:
+            driver.switch_to.default_content()
+        except StaleElementReferenceException:
+            time.sleep(0.25)
+            await Actions.switch_to_default(driver, element, chain, args)
+            pass
+
+    @staticmethod
+    async def switch_to_tab(driver, element, chain, args):
+        index = args.get("index", 0)
+        driver.switch_to.window(driver.window_handles[index])

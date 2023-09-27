@@ -24,11 +24,31 @@
         <label for="cbCSS">CSS</label><br>
         <input id="cbJS" type="radio" id="javascript" name="fav_language" value="JavaScript">
         <label for="cbJS">JavaScript</label>
+        <label>
+            <div>Framework</div>
+            <select>
+                <option value="none">None</option>
+                <option value="crs">CRS</option>
+                <option value="react">React</option>
+                <option value="angular">Angular</option>
+                <option value="vue">Vue</option>
+            </select>
+        </label>
     </div>
 
     <p>Web Components</p>
     <container-component></container-component>
 
+    <div role="toolbar">
+        <button onclick="openDialog()" id="btnOpenDialog">Open Dialog</button>
+    </div>
+
     <script type="module" src="components/container-component/container-component.js"></script>
+    <script>
+        function openDialog() {
+            const dialog = window.open('frame.html', 'dialog', 'width=400,height=300');
+            dialog.focus();
+        }
+    </script>
 </body>
 </html>
