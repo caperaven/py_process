@@ -87,6 +87,15 @@ class AssertModule:
         await WaitModule.element(api, step, ctx, process, item)
 
     @staticmethod
+    async def element_count_eq(api, step, ctx=None, process=None, item=None):
+        await WaitModule.element_count(api, step, ctx, process, item)
+
+    @staticmethod
+    async def element_count_neq(api, step, ctx=None, process=None, item=None):
+        step["args"]["operator"] = "neq"
+        await WaitModule.element_count(api, step, ctx, process, item)
+
+    @staticmethod
     async def element_not_exists(api, step, ctx=None, process=None, item=None):
         step["args"]["present"] = False
         await WaitModule.element(api, step, ctx, process, item)
