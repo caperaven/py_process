@@ -8,6 +8,10 @@
     <title>Document</title>
 
     <style>
+        body {
+            user-select: none;
+        }
+
         .back {
             background: whitesmoke;
         }
@@ -63,15 +67,36 @@
 
     <iframe id="frame" src="frame.html"></iframe>
 
-    <div class="drag"></div>
+    <div class="drag" onmousedown="startMove(event)"></div>
 
     <div class="drop"></div>
 
     <script type="module" src="components/container-component/container-component.js"></script>
     <script>
+        moveTarget = null;
+
         function openDialog() {
             const dialog = window.open('dialog.html', 'dialog', 'width=400,height=300');
             dialog.focus();
+        }
+
+        function startMove(event) {
+            moveTarget = event.target;
+            document.addEventListener("mousemove", mouseMove);
+            document.addEventListener("mouseup", mouseUp)
+        }
+
+        function mouseMove(event) {
+            if (moveTarget) {
+                moveTarget.style.left = event.clientX + 'px';
+                moveTarget.style.top = event.clientY + 'px';
+            }
+        }
+
+        function mouseUp(event) {
+            moveTarget = null;
+            document.removeEventListener("mousemove", mouseMove);
+            document.removeEventListener("mouseup", mouseUp)
         }
     </script>
 </body>
