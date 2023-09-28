@@ -130,7 +130,6 @@ class Actions:
     async def hover_over_element(driver, element, chain, args):
         action = ActionChains(driver)
         action.move_to_element(element).perform()
-        pass
 
     @staticmethod
     async def switch_to_window(driver, element, chain, args):

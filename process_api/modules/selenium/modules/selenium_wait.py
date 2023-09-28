@@ -35,9 +35,8 @@ class WaitModule:
 
     @staticmethod
     async def is_ready(api, step, ctx=None, process=None, item=None):
-        args = copy.deepcopy(step["args"])
-        args["attr"] = "data-ready"
-        args["value"] = "true"
+        step["args"]["attr"] = "data-ready"
+        step["args"]["value"] = "true"
         await WaitModule.attribute(api, step, ctx, process, item)
 
     @staticmethod
