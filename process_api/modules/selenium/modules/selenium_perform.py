@@ -128,25 +128,20 @@ class PerformModule:
     @staticmethod
     async def type_text(api, step, ctx=None, process=None, item=None):
         args = copy.deepcopy(step["args"])
-        value = args["value"]
+        args["action"] = "type_text"
+        await api.call("selenium", "perform", args, ctx, process, item)
 
-        api.logger.debug(f'type_text "{value}" in {args.get("query")}')
-
-        element = await api.call("selenium", "get", args, ctx, process, item)
-
-        if element is None:
-            api.logger.critical(f'Could not find element {args.get("query")}')
-            return
-
-        element.clear()
-        element.send_keys(value)
-        time.sleep(0.1)
-        element.send_keys(Keys.ENTER)
-        time.sleep(0.25)
+    @staticmethod
+    async def clear(api, step, ctx=None, process=None, item=None):
+        args = copy.deepcopy(step["args"])
+        args["action"] = "clear"
+        await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod
     async def hover_over_element(api, step, ctx=None, process=None, item=None):
-        await api.call("selenium", "goto", step["args"], ctx, process, item)
+        args = copy.deepcopy(step["args"])
+        args["action"] = "hover_over_element"
+        await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod
     async def move_by(api, step, ctx=None, process=None, item=None):

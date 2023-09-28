@@ -3,7 +3,7 @@ import os
 from selenium.common import StaleElementReferenceException
 from selenium.webdriver import Keys, ActionChains
 from process_api.modules.selenium.automation.get import get_element
-
+from selenium.webdriver.support.ui import Select
 
 async def perform(driver, args):
     timeout = args.get("timeout", 10)
@@ -52,12 +52,10 @@ class Actions:
         element.clear()
 
     @staticmethod
-    async def type(driver, element, chain, args):
-        text = args["text"]
-
+    async def type_text(driver, element, chain, args):
         element.clear()
         time.sleep(0.1)
-        element.send_keys(text)
+        element.send_keys(args["value"])
         time.sleep(0.25)
         element.send_keys(Keys.ENTER)
 
@@ -139,7 +137,7 @@ class Actions:
 
     @staticmethod
     async def switch_to_frame(driver, element, chain, args):
-        return driver.switch_to.frame(element)
+        driver.switch_to.frame(element)
 
     @staticmethod
     async def switch_to_default(driver, element, chain, args):
@@ -156,3 +154,8 @@ class Actions:
         folder = args.get("folder", "./")
         file = os.path.join(folder, file)
         driver.get_screenshot_as_file(file)
+
+    @staticmethod
+    async def select_option(driver, element, chain, args):
+        select = Select(element)
+        select.select_by_value(args["value"])
