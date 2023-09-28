@@ -87,6 +87,8 @@ class PerformModule:
     @staticmethod
     async def print_screen(api, step, ctx=None, process=None, item=None):
         args = copy.deepcopy(step["args"])
+        args["folder"] = api.variables.get("folder", "./")
+        args["action"] = "print_screen"
         await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod

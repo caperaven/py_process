@@ -1,9 +1,7 @@
 import time
-
+import os
 from selenium.common import StaleElementReferenceException
 from selenium.webdriver import Keys, ActionChains
-from selenium.webdriver.common.by import By
-
 from process_api.modules.selenium.automation.get import get_element
 
 
@@ -151,3 +149,10 @@ class Actions:
     async def switch_to_tab(driver, element, chain, args):
         index = args.get("index", 0)
         driver.switch_to.window(driver.window_handles[index])
+
+    @staticmethod
+    async def print_screen(driver, element, chain, args):
+        file = args.get("file", "untitled.png")
+        folder = args.get("folder", "./")
+        file = os.path.join(folder, file)
+        driver.get_screenshot_as_file(file)
