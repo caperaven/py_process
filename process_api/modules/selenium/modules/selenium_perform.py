@@ -23,7 +23,6 @@ class PerformModule:
     async def close_window(api, step, ctx=None, process=None, item=None):
         api.logger.debug(f'close_window')
         await api.call("selenium", "close_driver", step, ctx, process, item)
-        pass
 
     @staticmethod
     async def refresh(api, step, ctx=None, process=None, item=None):
@@ -93,7 +92,6 @@ class PerformModule:
     async def print_screen(api, step, ctx=None, process=None, item=None):
         args = copy.deepcopy(step["args"])
         await api.call("selenium", "perform", args, ctx, process, item)
-        pass
 
     @staticmethod
     async def select_option(api, step, ctx=None, process=None, item=None):
