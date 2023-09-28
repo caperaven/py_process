@@ -43,10 +43,12 @@
         <button onclick="openDialog()" id="btnOpenDialog">Open Dialog</button>
     </div>
 
+    <iframe id="frame" src="frame.html"></iframe>
+
     <script type="module" src="components/container-component/container-component.js"></script>
     <script>
         function openDialog() {
-            const dialog = window.open('frame.html', 'dialog', 'width=400,height=300');
+            const dialog = window.open('dialog.html', 'dialog', 'width=400,height=300');
             dialog.focus();
         }
     </script>

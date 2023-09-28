@@ -133,12 +133,16 @@ class Actions:
         pass
 
     @staticmethod
-    async def switch_to_frame(driver, element, chain, args):
+    async def switch_to_window(driver, element, chain, args):
         index = args.get("index", None)
 
         window_handles = driver.window_handles
         if index is not None:
             return driver.switch_to.window(window_handles[1])
+
+    @staticmethod
+    async def switch_to_frame(driver, element, chain, args):
+        return driver.switch_to.frame(element)
 
     @staticmethod
     async def switch_to_default(driver, element, chain, args):

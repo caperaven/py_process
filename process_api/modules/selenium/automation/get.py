@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 from process_api.modules.selenium.condition_callbacks import element_callback, element_usable_callback, light_and_shadow_dom_callback
@@ -36,6 +37,7 @@ async def get_element(driver, query, timeout):
         }))
 
         return wait.until(element_usable_callback(element))
+
 
 
 async def get_element_on_path(driver, query, timeout):

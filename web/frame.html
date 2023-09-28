@@ -1,23 +1,16 @@
-<label>
-    <div>User Name</div>
-    <input data-field="username" type="text" placeholder="User Name">
-</label>
-
-<label>
-    <div>Password</div>
-    <input data-field="password" type="password" placeholder="Password">
-</label>
-
-<div role="toolbar">
-    <button data-action="login" onclick="closeDialog()">Login</button>
-    <button data-action="cancel" onclick="closeDialog()">Cancel</button>
-</div>
-
-<script>
-    function closeDialog() {
-        const timeout = setTimeout(() => {
-            clearTimeout(timeout);
-            window.close();
-        }, 2000)
-    }
-</script>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <label>
+        <div>Pet Name</div>
+        <input data-field="petname" type="text" placeholder="Pet Name">
+    </label>
+</body>
+</html>

@@ -102,6 +102,12 @@ class PerformModule:
         await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod
+    async def switch_to_window(api, step, ctx=None, process=None, item=None):
+        args = copy.deepcopy(step["args"])
+        args["action"] = "switch_to_window"
+        await api.call("selenium", "perform", args, ctx, process, item)
+
+    @staticmethod
     async def switch_to_frame(api, step, ctx=None, process=None, item=None):
         args = copy.deepcopy(step["args"])
         args["action"] = "switch_to_frame"
@@ -131,6 +137,10 @@ class PerformModule:
         api.logger.debug(f'type_text "{value}" in {args.get("query")}')
 
         element = await api.call("selenium", "get", args, ctx, process, item)
+
+        if element is None:
+            api.logger.critical(f'Could not find element {args.get("query")}')
+            return
 
         element.clear()
         element.send_keys(value)

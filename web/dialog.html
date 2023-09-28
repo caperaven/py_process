@@ -1,0 +1,23 @@
+<label>
+    <div>User Name</div>
+    <input data-field="username" type="text" placeholder="User Name">
+</label>
+
+<label>
+    <div>Password</div>
+    <input data-field="password" type="password" placeholder="Password">
+</label>
+
+<div role="toolbar">
+    <button data-action="login" onclick="closeDialog()">Login</button>
+    <button data-action="cancel" onclick="closeDialog()">Cancel</button>
+</div>
+
+<script>
+    function closeDialog() {
+        const timeout = setTimeout(() => {
+            clearTimeout(timeout);
+            window.close();
+        }, 2000)
+    }
+</script>

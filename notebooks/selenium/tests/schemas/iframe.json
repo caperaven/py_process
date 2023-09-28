@@ -1,0 +1,32 @@
+{
+    "id": "window",
+    "main": {
+        "steps": {
+            "start": {
+                "type": "perform",
+                "action": "navigate",
+                "args": {
+                    "url": "http://127.0.0.1:8080/web/",
+                    "wait": "h1"
+                },
+                "next_step": "switch_to_frame"
+            },
+            "switch_to_frame": {
+                "type": "perform",
+                "action": "switch_to_frame",
+                "args": {
+                    "query": "#frame"
+                },
+                "next_step": "input_pet_name"
+            },
+            "input_pet_name": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "[data-field='petname']",
+                    "value": "Kitty"
+                }
+            }
+        }
+    }
+}
