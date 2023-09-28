@@ -79,6 +79,15 @@ class Actions:
 
     @staticmethod
     async def move_to(driver, element, chain, args):
+        # get target position
+        x = args["x"]
+        y = args["y"]
+
+        # move to target
+        chain.click_and_hold(element).move_by_offset(x, y).release().perform()
+
+    @staticmethod
+    async def move_by(driver, element, chain, args):
         # get current position
         current_x = element.location["x"]
         current_y = element.location["y"]
@@ -94,11 +103,6 @@ class Actions:
         # move to target
         chain.click_and_hold(element).move_by_offset(offset_x, offset_y).release().perform()
 
-    @staticmethod
-    async def move_by(driver, element, chain, args):
-        x = args["x"]
-        y = args["y"]
-        chain.drag_and_drop_by_offset(element, x, y).perform()
 
     @staticmethod
     async def drag_and_drop(driver, element, chain, args):
@@ -107,14 +111,14 @@ class Actions:
 
     @staticmethod
     async def drag_and_drop_by(driver, element, chain, args):
-        x = args["x"]
-        y = args["y"]
+        x = args.get("x", 0)
+        y = args.get("y", 0)
         element.drag_and_drop_by(x, y)
 
     @staticmethod
     async def drag_and_drop_by_offset(driver, element, chain, args):
-        x = args["x"]
-        y = args["y"]
+        x = args.get("x", 0)
+        y = args.get("y", 0)
         element.drag_and_drop_by_offset(x, y)
 
     @staticmethod

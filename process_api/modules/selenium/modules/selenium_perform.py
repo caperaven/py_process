@@ -144,6 +144,12 @@ class PerformModule:
         await api.call("selenium", "perform", args, ctx, process, item)
 
     @staticmethod
+    async def move_to(api, step, ctx=None, process=None, item=None):
+        args = copy.deepcopy(step["args"])
+        args["action"] = "move_to"
+        await api.call("selenium", "perform", args, ctx, process, item)
+
+    @staticmethod
     async def move_by(api, step, ctx=None, process=None, item=None):
         args = copy.deepcopy(step["args"])
         args["action"] = "move_by"
