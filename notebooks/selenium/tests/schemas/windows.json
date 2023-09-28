@@ -60,7 +60,10 @@
 
             "return_to_default": {
                 "type": "perform",
-                "action": "switch_to_default"
+                "action": "switch_to_window",
+                "args": {
+                    "index": 0
+                }
             }
         }
     }

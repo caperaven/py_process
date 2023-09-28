@@ -25,6 +25,20 @@
                 "args": {
                     "query": "[data-field='petname']",
                     "value": "Kitty"
+                },
+                "next_step": "switch_to_default"
+            },
+            "switch_to_default": {
+                "type": "perform",
+                "action": "switch_to_default",
+                "next_step": "type_first_name"
+            },
+            "type_first_name": {
+                "type": "perform",
+                "action": "type_text",
+                "args": {
+                    "query": "container-component child-component [data-field='model.firstName']",
+                    "value": "John"
                 }
             }
         }

@@ -138,7 +138,7 @@ class Actions:
 
         window_handles = driver.window_handles
         if index is not None:
-            return driver.switch_to.window(window_handles[1])
+            return driver.switch_to.window(window_handles[index])
 
     @staticmethod
     async def switch_to_frame(driver, element, chain, args):
@@ -146,8 +146,7 @@ class Actions:
 
     @staticmethod
     async def switch_to_default(driver, element, chain, args):
-        window_handles = driver.window_handles
-        driver.switch_to.window(window_handles[0])
+        driver.switch_to.default_content()
 
     @staticmethod
     async def switch_to_tab(driver, element, chain, args):
