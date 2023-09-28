@@ -16,10 +16,6 @@ class PerformModule:
         await api.call("selenium", "goto", step["args"], ctx, process, item)
 
     @staticmethod
-    async def open_and_close_url(api, step, ctx=None, process=None, item=None):
-        pass
-
-    @staticmethod
     async def close_window(api, step, ctx=None, process=None, item=None):
         api.logger.debug(f'close_window')
         await api.call("selenium", "close_driver", step, ctx, process, item)
@@ -27,7 +23,7 @@ class PerformModule:
     @staticmethod
     async def refresh(api, step, ctx=None, process=None, item=None):
         api.logger.debug(f'refresh')
-        driver = await api.call("selenium", "get_driver", step, ctx, process, item)
+        driver = api.variables["driver"]
         driver.refresh()
 
     @staticmethod
@@ -47,7 +43,7 @@ class PerformModule:
     @staticmethod
     async def context_click(api, step, ctx=None, process=None, item=None):
         api.logger.debug(f'context_click on {step["args"].get("query")}')
-        args = copy.deepcopy(["args"])
+        args = copy.deepcopy(step["args"])
         args["action"] = "context_click"
         await api.call("selenium", "perform", args, ctx, process, item)
 

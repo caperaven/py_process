@@ -48,7 +48,7 @@ class ProcessAPI:
     # If you do not define a action, it will assume the action name is "perform"
     # You can pass arguments to the function using the step args.
     # In addition, if required by the step, you need to also define the context (ctx), process and item.
-    async def call(self, step_type, step_action, step_args, ctx=None, process=None, item=None):
+    async def call(self, step_type, step_action, step_args=None, ctx=None, process=None, item=None):
         if step_action is None:
             step_action = "perform"
 
