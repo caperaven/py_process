@@ -1,0 +1,27 @@
+Commercial License Agreement
+
+This Commercial License Agreement ("Agreement") is entered into by and between [caperaven] ("Licensor") and the user ("Licensee").
+This Agreement covers the use of the process-api library ("Library").
+
+1. Use of the Library
+   Licensee is hereby granted a limited, non-exclusive, royalty-free license to use the Library for commercial purposes, subject to the terms and conditions of this Agreement.
+
+2. Free Usage
+   Licensee may use the Library free of charge during the initial period of use.
+
+3. Future Licensing Requirement
+   Licensee acknowledges that Licensor may, at its sole discretion, require Licensee to obtain a commercial license for continued use of the Library in the future.
+   The terms and conditions of such commercial license, including any applicable fees, will be communicated to Licensee when and if such a requirement arises.
+
+4. No Warranty
+   The Library is provided "as is," without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+5. Limitation of Liability
+   Licensor shall not be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this Library, even if advised of the possibility of such damage.
+
+6. Governing Law
+   This Agreement shall be governed by and construed in accordance with the laws of South Africa.
+
+By using the Library, Licensee agrees to be bound by the terms and conditions of this Agreement. If Licensee does not agree to these terms, Licensee is not authorized to use the Library.
+
+For questions or inquiries regarding commercial licensing, please contact caperaven@caperaven.co.za.

@@ -84,7 +84,7 @@ class Actions:
         y = args["y"]
 
         # move to target
-        chain.click_and_hold(element).move_by_offset(x, y).release().perform()
+        chain.move_to_element(element).click_and_hold(element).move_by_offset(x, y).release().perform()
 
     @staticmethod
     async def move_by(driver, element, chain, args):
@@ -97,12 +97,11 @@ class Actions:
         y = args["y"]
 
         # calculate offset
-        offset_x = x - current_x
-        offset_y = y - current_y
+        offset_x = current_x + x
+        offset_y = current_y + y
 
         # move to target
-        chain.click_and_hold(element).move_by_offset(offset_x, offset_y).release().perform()
-
+        element.move_by_offset(offset_x, offset_y).perform()
 
     @staticmethod
     async def drag_and_drop(driver, element, chain, args):

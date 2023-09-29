@@ -1,0 +1,18 @@
+[project]
+name = "process-api"
+version = "0.0.1"
+authors = [
+  { name="caperaven", email="caperaven@caperaven.co.za" },
+]
+description = "A extendable library that enables intent driven development by allowing code and json execution of development intent"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License :: Commercial",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/caperaven/py_process"
+"Bug Tracker" = "https://github.com/caperaven/py_process/issues"

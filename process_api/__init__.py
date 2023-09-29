@@ -1,3 +1,9 @@
+"""
+This library is dual-licensed under the MIT License for open-source and free usage
+and a separate commercial license for closed-source and commercial use.
+See LICENSE-MIT.txt and LICENSE-COMMERCIAL.txt for details.
+"""
+
 from process_api.process_runner import ProcessRunner
 from process_api.schema_runner import SchemaRunnerManager
 from process_api.modules import register
