@@ -1,4 +1,4 @@
-# process-api
+# process_api
 
 ## Description
 This is an extensible library that allows processes to be defined and executed in either Python or JSON. 

@@ -1,7 +1,7 @@
 Commercial License Agreement
 
 This Commercial License Agreement ("Agreement") is entered into by and between [caperaven] ("Licensor") and the user ("Licensee").
-This Agreement covers the use of the process-api library ("Library").
+This Agreement covers the use of the process_api library ("Library").
 
 1. Use of the Library
    Licensee is hereby granted a limited, non-exclusive, royalty-free license to use the Library for commercial purposes, subject to the terms and conditions of this Agreement.
