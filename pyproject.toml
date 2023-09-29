@@ -9,9 +9,11 @@ readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License :: Commercial",
     "Operating System :: OS Independent",
 ]
+
+[tool.poetry.dynamic]
+license = 'MIT OR Commercial'
 
 [project.urls]
 "Homepage" = "https://github.com/caperaven/py_process"

@@ -7,5 +7,16 @@ setup(
     author='caperaven',
     author_email='caperaven@caperaven.co.za',
     license='MIT OR Commercial',
-    packages=find_packages(where='process_api'),
+    packages=[
+        'process_api',
+        'process_api.expressions',
+        'process_api.modules',
+        'process_api.modules.selenium',
+        'process_api.modules.selenium.automation',
+        'process_api.modules.selenium.condition_callbacks',
+        'process_api.modules.selenium.conversions',
+        'process_api.modules.selenium.modules',
+        'process_api.schema_runner',
+        'process_api.utils'
+    ]
 )
