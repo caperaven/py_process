@@ -1,4 +1,3 @@
-
 google_recording = {
     "title": "Large Recording",
     "selectorAttribute": "id",
