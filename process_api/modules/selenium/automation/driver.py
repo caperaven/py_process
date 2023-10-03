@@ -55,6 +55,7 @@ class DriverActions:
 
         driver = webdriver.Firefox(options=opts)
         driver.maximize_window()
+        driver.get("about:blank")
         return driver
 
     @staticmethod
@@ -67,4 +68,3 @@ class DriverActions:
         driver.maximize_window()
         driver.get("about:blank")
         return driver
-        pass
