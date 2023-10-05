@@ -42,7 +42,7 @@ async def process_parameters(process, parameters):
     process["parameters"] = schema_parameters
 
 
-async def run_process(api, schema, process_name, ctx=None, parameters=None, item=None):
+async def run_process(api, schema, process_name, ctx=None, parameters=None, item=None, callback=None):
     process = schema.get(process_name, None)
 
     # make a copy of the process
@@ -53,11 +53,12 @@ async def run_process(api, schema, process_name, ctx=None, parameters=None, item
         del process["parameters_def"]
 
     start_step = process["steps"]["start"]
+    start_step["name"] = "start"
     api.logger.info('run step: "start"')
-    return await api.run(start_step, ctx, process, item)
+    return await api.run(start_step, ctx, process, item, callback)
 
 
-async def run_schema(api, schema, ctx=None, parameters=None):
+async def run_schema(api, schema, ctx=None, parameters=None, callback=None):
     api.logger.info(f'run schema: "{schema.get("id", "unknown")}"')
 
     sequence = schema.get('sequence', None)
@@ -71,13 +72,13 @@ async def run_schema(api, schema, ctx=None, parameters=None):
         result = None
         for process in sequence:
             api.logger.info(f'run process: "${process}"')
-            result = await run_process(api, schema, process, ctx, parameters)
+            result = await run_process(api, schema, process, ctx, parameters, None, callback)
 
         return result
 
     elif "main" in schema:
         api.logger.info(f'run process: "main"')
-        return await run_process(api, schema, "main", ctx, parameters)
+        return await run_process(api, schema, "main", ctx, parameters, None, callback)
 
 
 async def load_json(file_path):
@@ -101,8 +102,8 @@ class SchemaRunnerManager:
         schema = await load_json(filename)
         return await self.run_schema(api, schema, ctx, parameters)
 
-    async def run_schema(self, api, schema, ctx=None, parameters=None):
-        return await run_schema(api, schema, ctx, parameters)
+    async def run_schema(self, api, schema, ctx=None, parameters=None, callback=None):
+        return await run_schema(api, schema, ctx, parameters, callback)
 
     async def run_process(self, api, schema, process_name, ctx=None, parameters=None):
         return await run_process(api, schema, process_name, ctx, parameters)

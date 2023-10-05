@@ -19,6 +19,7 @@ import traceback
 class ProcessAPI:
 
     variables = {}
+    break_on_error = False
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -68,27 +69,22 @@ class ProcessAPI:
 
     # This method is used to call a process step.
     # In this case you pass on a dictionary that defines the step, including the type, action and args.
-    async def run(self, step, ctx=None, process=None, item=None):
+    async def run(self, step, ctx=None, process=None, item=None, callback=None):
         try:
-            return await self.process_runner.run_step(self, step, ctx, process, item)
+            return await self.process_runner.run_step(self, step, ctx, process, item, callback)
+        except TimeoutError as e:
+            self.logger.critical(str(e))
+            self.logger.error(traceback.format_exc())
         except Exception as e:
             self.logger.critical(str(e))
             self.logger.error(traceback.format_exc())
 
     # This method is used to load a process schema definition from file and execute the schema as a whole.
     async def run_from_file(self, api, filename, ctx=None, parameters=None):
-        try:
-            return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
-        except Exception as e:
-            self.logger.critical(str(e))
-            self.logger.error(traceback.format_exc())
+        return await self.schema_runner.run_from_file(api, filename, ctx, parameters)
 
-    async def run_schema(self, schema, ctx=None, parameters=None):
-        try:
-            return await self.schema_runner.run_schema(self, schema, ctx, parameters)
-        except Exception as e:
-            self.logger.critical(str(e))
-            self.logger.error(traceback.format_exc())
+    async def run_schema(self, schema, ctx=None, parameters=None, callback=None):
+        return await self.schema_runner.run_schema(self, schema, ctx, parameters, callback)
 
 
 process_api = ProcessAPI()

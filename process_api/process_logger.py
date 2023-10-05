@@ -1,5 +1,6 @@
 import logging
 import io
+import os
 
 
 class ProcessLogger:
@@ -15,6 +16,8 @@ class ProcessLogger:
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.stream_handler.setFormatter(formatter)
         self.logger.addHandler(self.stream_handler)
+        self.has_error = False
+        self.error_count = 0
 
     def __del__(self):
         self.stream_handler.close()
@@ -36,6 +39,8 @@ class ProcessLogger:
         # Reset the content of the log buffer
         self.log_buffer.truncate(0)
         self.log_buffer.seek(0)
+        self.has_error = False
+        self.error_count = 0
 
     def print(self):
         log_content = self.log_buffer.getvalue()
@@ -45,6 +50,11 @@ class ProcessLogger:
         log_content = self.log_buffer.getvalue()
 
         try:
+            directory = os.path.dirname(file_name)
+
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
             with open(file_name, 'w') as file:
                 file.write(log_content)
             print(f"Log content saved to {file_name}")
@@ -62,9 +72,15 @@ class ProcessLogger:
 
     def error(self, msg, *args, **kwargs):
         self.logger.error(msg, *args, **kwargs)
+        self.has_error = True
+        self.error_count += 1
 
     def critical(self, msg, *args, **kwargs):
         self.logger.error(msg, *args, **kwargs)
+        self.has_error = True
+        self.error_count += 1
 
     def fatal(self, msg, *args, **kwargs):
         self.logger.error(msg, *args, **kwargs)
+        self.has_error = True
+        self.error_count += 1

@@ -1,5 +1,7 @@
 ## Build package for distribution
-python setup.py sdist
+
+1. deactivate
+2. python setup.py sdist
 
 ## Upload 
 pip install twine
