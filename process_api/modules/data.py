@@ -1,5 +1,6 @@
 import pandas as pd
 from process_api.utils.get_value import get_value
+import matplotlib.pyplot as plt
 
 
 class DataCache:
@@ -131,15 +132,18 @@ class DataModule:
     @staticmethod
     async def plot(api, step, ctx=None, process=None, item=None):
         args = step["args"]
-        name = args["name"]
-        field = args["field"]
-        kind = args["kind"]
-        title = args.get("title", "")
-        ylabel = args.get("ylabel", "")
-        xlabel = args.get("xlabel", "")
+        name = await get_value(args["name"], ctx, process, item)
+        field = await get_value(args["field"], ctx, process, item)
+        kind = await get_value(args.get("kind", "line"), ctx, process, item)
+        title = await get_value(args.get("title", ""), ctx, process, item)
+        ylabel = await get_value(args.get("ylabel", ""), ctx, process, item)
+        xlabel = await get_value(args.get("xlabel", ""), ctx, process, item)
+        file = await get_value(args.get("file", None), ctx, process, item)
 
-        data_cache.get(name)
+        df = data_cache.get(name)
+        df[field].plot(kind=kind, title=title, ylabel=ylabel, xlabel=xlabel)
 
-        # df['memory'].plot(kind='line', title='Memory Over Time', ylabel='Memory', xlabel='Index/Time')
-        # plt.show()
-        pass
+        if file is not None:
+            plt.savefig(file, dpi=300, bbox_inches='tight')
+
+        return plt.show()
