@@ -128,4 +128,18 @@ class DataModule:
         perspective = await get_value(args.get("perspective"), ctx, process, item)
         return data_cache.get_perspective(name, perspective)
 
+    @staticmethod
+    async def plot(api, step, ctx=None, process=None, item=None):
+        args = step["args"]
+        name = args["name"]
+        field = args["field"]
+        kind = args["kind"]
+        title = args.get("title", "")
+        ylabel = args.get("ylabel", "")
+        xlabel = args.get("xlabel", "")
 
+        data_cache.get(name)
+
+        # df['memory'].plot(kind='line', title='Memory Over Time', ylabel='Memory', xlabel='Index/Time')
+        # plt.show()
+        pass

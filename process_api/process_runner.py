@@ -31,6 +31,9 @@ class ProcessRunner:
             if args is not None and "target" in args:
                 await set_value(args.get('target'), result, ctx, process, item)
 
+            if callback is not None:
+                await callback(api, step, ctx, process, item)
+
             # perform the next step if there is one
             # and there was either no error or we are not breaking on error
             if "next_step" in step:
@@ -42,12 +45,8 @@ class ProcessRunner:
                 next_step = process["steps"][next_step_name]
                 next_step["name"] = next_step_name
 
-                return await self.run_step(api, next_step, ctx, process, item)
-
-            if callback is not None:
-                await callback(api, step, ctx, process, item)
+                return await self.run_step(api, next_step, ctx, process, item, callback)
 
             return result
         else:
-            print(f"{action} not found in the imported module.")
-
+            api.logger.fatal(f"action '{action}' not found in the imported module '{system_type}'.")

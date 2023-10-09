@@ -8,6 +8,7 @@ from process_api.process_runner import ProcessRunner
 from process_api.schema_runner import SchemaRunnerManager
 from process_api.modules import register
 from process_api.process_logger import ProcessLogger
+from process_api.process_templates import ProcessTemplates
 import traceback
 
 # This class is a wrapper around the ProcessRunner class.
@@ -30,6 +31,7 @@ class ProcessAPI:
     def __init__(self):
         self.process_runner = ProcessRunner()
         self.schema_runner = SchemaRunnerManager()
+        self.process_templates = ProcessTemplates()
         self.logger = ProcessLogger()
 
     def set_variable(self, name, value):
@@ -48,6 +50,12 @@ class ProcessAPI:
     # you will get an error.
     def add_module(self, name, module):
         self.process_runner.modules[name] = module
+
+    def add_template(self, template):
+        self.process_templates.add_template(template)
+
+    def load_templates_from_folder(self, folder):
+        self.process_templates.load_from_folder(folder)
 
     # This method is used to call a process step.
     # You need to define the module using the step type for example "console"
