@@ -1,4 +1,5 @@
 from process_api.utils.prefixes import CONTEXT_PREFIX, PROCESS_PARAMETERS_PREFIX, PROCESS_DATA_PREFIX, ITEM_PREFIX
+import re
 
 
 async def get_value(value=None, ctx=None, process=None, item=None):
@@ -20,19 +21,38 @@ async def get_value(value=None, ctx=None, process=None, item=None):
 
         # if the value starts with $c{, then it is a context variable
         if value.startswith(CONTEXT_PREFIX) and ctx is not None:
-            return get_property_on_path(ctx, value[3:-1].split("."))
+            result = get_property_on_path(ctx, value[3:-1].split("."))
+            return await inflate_value(result, ctx, process, item)
 
         # if the value starts with $p{, then it is a process parameters variable
         if value.startswith(PROCESS_PARAMETERS_PREFIX) and process is not None:
-            return get_property_on_path(process["parameters"], value[3:-1].split("."))
+            result = get_property_on_path(process["parameters"], value[3:-1].split("."))
+            return await inflate_value(result, ctx, process, item)
 
         # if the value starts with $d{, then it is a process data variable
         if value.startswith(PROCESS_DATA_PREFIX) and process is not None:
-            return get_property_on_path(process["data"], value[3:-1].split("."))
+            result = get_property_on_path(process["data"], value[3:-1].split("."))
+            return await inflate_value(result, ctx, process, item)
 
         # if the value starts with $i{, then it is an item variable
         if value.startswith(ITEM_PREFIX) and item is not None:
-            return get_property_on_path(item, value[3:-1].split("."))
+            result = get_property_on_path(item, value[3:-1].split("."))
+            return await inflate_value(result, ctx, process, item)
+
+        return await inflate_value(value, ctx, process, item)
+
+    return value
+
+
+async def inflate_value(value, ctx=None, process=None, item=None):
+    if "$" not in str(value):
+        return value
+
+    matches = re.findall(r'\$.\{[^}]+\}', value)
+
+    for match in matches:
+        result = await get_value(match, ctx, process, item)
+        value = value.replace(match, str(result))
 
     return value
 

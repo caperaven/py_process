@@ -1,0 +1,22 @@
+{
+    "id": "dynamic_console",
+
+    "print_message": {
+		"parameters_def": {
+			"message": {
+				"type": "string",
+				"required": true
+			}
+		},
+
+        "steps": {
+            "start": {
+                "type": "console",
+                "action": "print",
+                "args": {
+                    "message": "Dynamic message: $p{message}"
+                }
+            }
+        }
+    }
+}
