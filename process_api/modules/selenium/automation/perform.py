@@ -65,8 +65,15 @@ class Actions:
 
     @staticmethod
     async def key_down(driver, element, chain, args=None):
-        key = args["key"]
-        chain.key_down(key).perform()
+        key = args.get("key")
+
+        if key is not None:
+            chain.key_down(key).perform()
+
+        keys = args.get("keys")
+        if keys is not None:
+            for key in keys:
+                chain.key_down(key).perform()
 
     @staticmethod
     async def key_up(driver, element, chain, args=None):

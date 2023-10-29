@@ -109,6 +109,14 @@ class DataModule:
         return True
 
     @staticmethod
+    async def set_data(api, step, ctx=None, process=None, item=None):
+        args = step["args"]
+        name = await get_value(args.get("name"), ctx, process, item)
+        data = await get_value(args.get("data"), ctx, process, item)
+        data_cache.store[name] = pd.DataFrame(data)
+        return True
+
+    @staticmethod
     async def get(api, step, ctx=None, process=None, item=None):
         args = step["args"]
         name = await get_value(args.get("name"), ctx, process, item)
