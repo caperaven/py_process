@@ -1,21 +1,13 @@
-import os
-import gc
-import torch
 from transformers import GPTNeoForCausalLM, GPT2Tokenizer
+from process_api.modules.ai.model_base import ModelBase
 
 
-class GPTNeoCache:
-    def __init__(self, path):
-        self.model = None
-        self.tokenizer = None
-        self.model_path = None
-        self.device = None
-        self.model_name = "EleutherAI/gpt-neo-2.7B"
+class GPTNeoCache(ModelBase):
+    def __init__(self):
+        super.__init__("EleutherAI/gpt-neo-2.7B")
 
     async def load(self, path):
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-
-        self.model_path = os.path.normpath(path + "/" + self.model_name)
+        await super().load(path)
 
         self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_path)
         self.tokenizer.pad_token = self.tokenizer.eos_token
@@ -24,8 +16,7 @@ class GPTNeoCache:
         return f"Using device: {self.device}"
 
     async def execute(self, prompt, do_sample, max_length, temperature):
-        if self.model is None:
-            raise Exception("GPT-Neo model not loaded. Please call load_model first.")
+        await super().execute()
 
         inputs = self.tokenizer(prompt, return_tensors="pt", padding=True, truncation=True)
         inputs = {k: v.to(self.device) for k, v in inputs.items()}  # Move inputs to GPU
@@ -41,12 +32,6 @@ class GPTNeoCache:
         generated_text = self.tokenizer.decode(output[0], skip_special_tokens=True)
 
         return generated_text
-
-    async def dispose(self):
-        self.model = None
-        self.tokenizer = None
-        gc.collect()
-        torch.cuda.empty_cache()
 
 
 class GPTNeoModule:
@@ -67,7 +52,7 @@ class GPTNeoModule:
         args = step["args"]
         prompt = args["prompt"]
 
-        do_sample = args.get("do_sample", True)
+        do_sample = args.get("do_sample", False)
         max_length = args.get("max_length", 1024)
         temperature = args.get("temperature", 0.1)
 

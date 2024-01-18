@@ -1,4 +1,5 @@
 import os
+from huggingface_hub import snapshot_download
 from transformers import AutoModel, AutoTokenizer, pipeline
 
 
@@ -13,16 +14,10 @@ class AIModule:
         args = step["args"]
         model_name = args["model"]
         model_path = os.path.normpath(args["path"] + "/" + model_name)
+        allow_patterns = args.get("allow_patterns", None)
+        ignore_patterns = args.get("ignore_patterns", None)
 
-        model = AutoModel.from_pretrained(model_name)
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-        # check if the path exists and if it does not create it.
-        if not os.path.exists(model_path):
-            os.makedirs(model_path)
-
-        model.save_pretrained(model_path)
-        tokenizer.save_pretrained(model_path)
+        snapshot_download(model_name, local_dir=model_path, allow_patterns=allow_patterns, ignore_patterns=ignore_patterns)
 
     @staticmethod
     async def load_text_generator(api, step, ctx=None, process=None, item=None):
